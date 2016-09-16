@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Gate;
 use App\User;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class AdminCategoriesController extends Controller
+class AdminUsersController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -20,9 +22,12 @@ class AdminCategoriesController extends Controller
 
     public function index()
     {
+        $users = User::paginate(20);
+        //dd($users);
 		$data = ['user_count' => User::all()->count(),
-				'selected_menu' => 'Categories'
+				'selected_menu' => 'Users',
+                'users' => $users
 				];
-		return view('admin.categories', $data);
+		return view('admin.users', $data);
     }
 }

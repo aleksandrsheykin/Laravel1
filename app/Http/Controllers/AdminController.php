@@ -23,8 +23,8 @@ class AdminController extends Controller
     public function index()
     {
 		$data = ['user_count' => User::all()->count(),
-				'selected_menu' => 'overview'
+				'selected_menu' => 'Overview'
 				];
-		return view('admin.content', $data);
+		return view('admin.overview', $data);
     }
 }

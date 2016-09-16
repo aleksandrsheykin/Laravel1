@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 //admins route
 Route::get('/admin', 'AdminController@index')->name('admin')->middleware('admin');
 Route::get('/admin/categories', 'AdminCategoriesController@index')->name('adminCategories')->middleware('admin');
+Route::get('/admin/users', 'AdminUsersController@index')->name('adminUsers')->middleware('admin');
