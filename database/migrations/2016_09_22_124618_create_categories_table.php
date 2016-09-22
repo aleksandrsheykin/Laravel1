@@ -10,12 +10,12 @@ class CreateCategoriesTable extends Migration {
 		Schema::create('categories', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
-			$table->integer('parent_id');
+			$table->integer('parent_id')->default('0');
 			$table->string('name');
 			$table->text('description');
-			$table->boolean('is_plus');
-			$table->boolean('is_visible');
-			$table->boolean('is_system');
+			$table->boolean('is_plus')->default(1);
+			$table->boolean('is_visible')->default(1);
+			$table->boolean('is_system')->default(0);
 			$table->string('colour', 9);
 		});
 	}

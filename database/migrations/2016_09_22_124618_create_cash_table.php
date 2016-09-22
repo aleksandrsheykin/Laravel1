@@ -14,8 +14,8 @@ class CreateCashTable extends Migration {
 			$table->decimal('summa', 10,2);
 			$table->text('description');
 			$table->string('ico');
-			$table->boolean('is_basic');
-			$table->boolean('is_visible');
+			$table->boolean('is_basic')->default(0);
+			$table->boolean('is_visible')->default(1);
 			$table->string('colour', 9);
 			$table->timestamps();
 		});
