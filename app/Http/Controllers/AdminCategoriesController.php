@@ -20,7 +20,8 @@ class AdminCategoriesController extends Controller
 
     public function index()
     {
-		$data = ['user_count' => User::all()->count(),
+		
+		$data = [
 				'selected_menu' => 'Categories'
 				];
 		return view('admin.categories', $data);
