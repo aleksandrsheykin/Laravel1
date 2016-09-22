@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Gate;
 use App\User;
-
 class AdminCategoriesController extends Controller
 {
     /**
@@ -15,15 +12,28 @@ class AdminCategoriesController extends Controller
      */
     public function __construct()
     {
-
     }
-
     public function index()
     {
-		
+        
 		$data = [
-				'selected_menu' => 'Categories'
+                'selected_menu' => 'Categories'
 				];
 		return view('admin.categories', $data);
     }
+	
+    public function put(Request $request)
+    {
+		if ($request->input('addCategory')) {	
+			dd($request->input());
+		} else {
+			dd(222);
+		}
+        
+		$data = [
+                'selected_menu' => 'Categories'
+				];
+		return view('admin.categories', $data);
+    }	
+	
 }
