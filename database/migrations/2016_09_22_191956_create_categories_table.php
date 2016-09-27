@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration {
 			$table->boolean('is_plus')->default(1);
 			$table->boolean('is_visible')->default(1);
 			$table->boolean('is_system')->default(0);
-			$table->string('colour', 9);
+			$table->string('colour', 9)->default('FFDAB9');
 		});
 	}
 

@@ -1,9 +1,71 @@
 @extends('admin.app')
 
 @section('content')
+
+<script>
+	function deleteCategory(id_cat, confirg) {
+		if (confirm) {
+			event.preventDefault(); 
+			document.getElementById('cat_del_form_'+id_cat).submit();
+		} else {	//показать диалог подтверждения удаления
+			//
+		}
+		return false;
+	}
+</script>
   
 <div class="row">
-	<div class="col-md-6">
+
+	<div class="col-md-8">
+		<div class="panel panel-warning" id="delete_confirmation" style="display: none;">
+			<div class="panel-heading">Confirmation delete category</div>
+			<div class="panel-body">
+				Удалить? <label></label>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>description</th>
+					<th>is_plus</th>
+					<th>is_visible</th>
+					<th>is_system</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+					@if (isset($category))
+						@foreach ($category as $cat)
+						<tr>
+							<td>{{ $cat->id }}</td>
+							<td>{{ $cat->name }}</td>
+							<td>{{ $cat->description }}</td>
+							<td>{{ $cat->is_plus }}</td>
+							<td>{{ $cat->is_visible }}</td>
+							<td>{{ $cat->is_system }}</td>
+							<td>
+								<a href="{{ Route('adminCategoriesDel') }}" onclick="deleteCategory({{ $cat->id }}, 0);">
+									delete
+								</a>
+								<form id="cat_del_form_{{ $cat->id }}" action="{{ Route('adminCategoriesDel') }}" method="POST" style="display: none;">
+									{{ method_field('DELETE') }}
+									{{ csrf_field() }}
+									<input type="hidden" name="cat_id" id="cat_id" value="{{ $cat->id }}">
+									<input type="hidden" name="action" id="action" value="delete_category">
+								</form>								
+							</td>
+						</tr>        
+						@endforeach
+					@endif
+				</tbody>
+			</table>
+		</div>		
+	</div>	
+	
+	<div class="col-md-4">
 		<div class="panel panel-default"> 
 			<div class="panel-heading">Add Start Category</div>
 			<div class="panel-body">
@@ -15,8 +77,14 @@
 						<label for="parent_id" class="col-md-4 control-label">parent_id</label>
 						<div class="col-md-6">
 							<select class="form-control" id="parent_id" name="parent_id">
-							  <option>1</option>
-							  <option>2</option>
+								@if (isset($category))
+									<option value="0">-</option>
+									@foreach ($category as $cat)
+										<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+									@endforeach
+								@else
+									<option value="0">0</option>
+								@endif
 							</select>
 							<span class="help-block">1 = Доход, 2 = Расход</span>
 							@if ($errors->has('parent_id'))
@@ -51,33 +119,33 @@
 						</div>
 					</div>
 					
-					<div class="form-group{{ $errors->has('isPlus') ? ' has-error' : '' }}">
-						<label for="isPlus" class="col-md-4 control-label">isPlus</label>
+					<div class="form-group{{ $errors->has('is_plus') ? ' has-error' : '' }}">
+						<label for="is_plus" class="col-md-4 control-label">is_plus</label>
 						<div class="col-md-6">
-							<select class="form-control" id="isPlus" name="isPlus">
-							  <option>1</option>
-							  <option>2</option>
+							<select class="form-control" id="is_plus" name="is_plus">
+							  <option value="1">Доход</option>
+							  <option value="0">Расход</option>
 							</select>
 							<span class="help-block">1 = Доход, 2 = Расход</span>
-							@if ($errors->has('isPlus'))
+							@if ($errors->has('is_plus'))
 								<span class="help-block">
-									<strong>{{ $errors->first('isPlus') }}</strong>
+									<strong>{{ $errors->first('is_plus') }}</strong>
 								</span>
 							@endif
 						</div>
 					</div>
 					
-					<div class="form-group{{ $errors->has('isVisible') ? ' has-error' : '' }}">
-						<label for="isVisible" class="col-md-4 control-label">isVisible</label>
+					<div class="form-group{{ $errors->has('is_visible') ? ' has-error' : '' }}">
+						<label for="is_visible" class="col-md-4 control-label">is_visible</label>
 						<div class="col-md-6 checkbox">
 							<label>
-								<input type="checkbox" name="isVisible" id="isVisible" value="isVisible">
-								isVisible
+								<input type="checkbox" name="is_visible" id="is_visible" value="is_visible" checked>
+								is_visible
 							</label>
 
-							@if ($errors->has('isVisible'))
+							@if ($errors->has('is_visible'))
 								<span class="help-block">
-									<strong>{{ $errors->first('isVisible') }}</strong>
+									<strong>{{ $errors->first('is_visible') }}</strong>
 								</span>
 							@endif
 						</div>
@@ -93,7 +161,11 @@
 			</div>
 		</div>
 	</div>
-</div>
+	
+</div>	<!--row -->
 
+<div class="row">
+
+</div>
 
 @endsection	
