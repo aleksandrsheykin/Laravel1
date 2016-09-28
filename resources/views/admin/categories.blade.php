@@ -90,7 +90,7 @@
 									<option value="0">0</option>
 								@endif
 							</select>
-							<span class="help-block">1 = Доход, 2 = Расход</span>
+							<span class="help-block">Родитель</span>
 							@if ($errors->has('parent_id'))
 								<span class="help-block">
 									<strong>{{ $errors->first('parent_id') }}</strong>
@@ -130,7 +130,6 @@
 							  <option value="1">Доход</option>
 							  <option value="0">Расход</option>
 							</select>
-							<span class="help-block">1 = Доход, 2 = Расход</span>
 							@if ($errors->has('is_plus'))
 								<span class="help-block">
 									<strong>{{ $errors->first('is_plus') }}</strong>
