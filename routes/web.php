@@ -26,4 +26,3 @@ Route::put('/admin/categories', 'AdminCategoriesController@put')->name('adminCat
 Route::delete('/admin/categories', 'AdminCategoriesController@del')->name('adminCategoriesDel')->middleware('admin');
 
 Route::get('/admin/users', 'AdminUsersController@index')->name('adminUsers')->middleware('admin');
-//Route::post('/admin/users', 'AdminUsersController@index')->name('adminUsers')->middleware('admin');

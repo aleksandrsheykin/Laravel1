@@ -3,12 +3,13 @@
 @section('content')
 
 <script>
-	function deleteCategory(id_cat, confirg) {
-		if (confirm) {
+	function deleteCategory(id_cat, cat_name, confirm) {
+		if (confirm > 0) {
 			event.preventDefault(); 
 			document.getElementById('cat_del_form_'+id_cat).submit();
 		} else {	//показать диалог подтверждения удаления
-			//
+			document.getElementById('id_category_for_delete').innerHTML = '<a href="#" onclick="deleteCategory('+id_cat+', 0, 1);">delete '+cat_name+'</a>';
+			document.getElementById('delete_confirmation').style.display = 'block';
 		}
 		return false;
 	}
@@ -20,7 +21,10 @@
 		<div class="panel panel-warning" id="delete_confirmation" style="display: none;">
 			<div class="panel-heading">Confirmation delete category</div>
 			<div class="panel-body">
-				Удалить? <label></label>
+				Delete this category? 
+				<label id="id_category_for_delete"><a href="#" onclick="deleteCategory({1, '', 1);">name</a></label>
+				/
+				<label><a href="#" onclick="document.getElementById('delete_confirmation').style.display = 'none';">no</a></label>
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -47,7 +51,7 @@
 							<td>{{ $cat->is_visible }}</td>
 							<td>{{ $cat->is_system }}</td>
 							<td>
-								<a href="{{ Route('adminCategoriesDel') }}" onclick="deleteCategory({{ $cat->id }}, 0);">
+								<a href="#" onclick="deleteCategory({{ $cat->id }}, '{{ $cat->name }}', 0);">
 									delete
 								</a>
 								<form id="cat_del_form_{{ $cat->id }}" action="{{ Route('adminCategoriesDel') }}" method="POST" style="display: none;">
