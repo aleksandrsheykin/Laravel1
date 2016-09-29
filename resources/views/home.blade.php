@@ -7,31 +7,26 @@
 		
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#gain" data-toggle="tab">Расходы</a></li>
-			<li><a href="#expenses" data-toggle="tab">Доходы</a></li>
-			<li><a href="#move" data-toggle="tab">Перемещения</a></li>
+			<li class="active"><a class="bg-warning" href="#gain" data-toggle="tab">Расходы</a></li>
+			<li><a href="#expenses" class="bg-success" data-toggle="tab">Доходы</a></li>
+			<li><a href="#move" class="bg-info" data-toggle="tab">Перемещения</a></li>
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div class="tab-pane active" id="gain">
 				<div class="panel panel-warning">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-md-2"></div>
-							<div class="col-md-8">
-								<ul class="pagination">
-									<li><a href="#">&laquo;</a></li>
-									<li><a href="#">Позавера</a></li>
-									<li><a href="#">Вчера</a></li>
-									<li><a href="#"><input type="date" name="date_gain" value="{{ date('Y-m-d') }}" class="form-control"></a></li>
-									<li><a href="#">Завтра</a></li>
-									<li><a href="#">Послезавтра</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
-							</div>
-							<div class="col-md-2"></div>
-						</div>
+					<div class="panel-heading text-center">
+						<ul class="pagination" style="margin: 0px;">
+							<li><a href="#">&laquo;</a></li>
+							<li><a href="#">Позавера</a></li>
+							<li><a href="#">Вчера</a></li>
+							<li><a href="#"><input type="date" name="date_gain" value="{{ date('Y-m-d') }}" class="form-control"></a></li>
+							<li><a href="#">Завтра</a></li>
+							<li><a href="#">Послезавтра</a></li>
+							<li><a href="#">&raquo;</a></li>
+						</ul>
+						<input type="range" class="form-control" min="0" max="31" value="{{ date('d') }}" />	
 					</div>
 					<div class="panel-body">
 						Panel content
