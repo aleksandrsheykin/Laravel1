@@ -65,6 +65,7 @@
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
+										<span class="glyphicon glyphicon-log-out"></span>
                                         Logout
                                     </a>
 
@@ -72,7 +73,7 @@
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
-								<li><a href="{{ route('settings') }}">Settings</a></li>
+								<li><a href="{{ route('settings') }}"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
 								
 								@if (isset($admin_link))
 									<li><a href="{{ $admin_link }}">admin</a></li>
@@ -85,8 +86,10 @@
         </div>
     </nav>
 
+	<div class="container">
     @yield('content')
-
+	</div>
+	
     <!-- Scripts -->
     <script src="/js/app.js"></script>
 </body>
