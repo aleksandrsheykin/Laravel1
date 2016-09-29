@@ -7,8 +7,10 @@
 			222
         </div>
 	    <div class="col-md-3 col-xs-12 col-md-pull-9" style="background: #BCA;">
-			111
+			@include('layouts.leftmenu')
         </div>	
     </div>
 </div>
 @endsection
+
+
