@@ -9,14 +9,14 @@
 			document.getElementById('cat_del_form_'+id_cat).submit();
 		} else {	//показать диалог подтверждения удаления
 			document.getElementById('id_category_for_delete').innerHTML = '<a href="#" onclick="deleteCategory('+id_cat+', 0, 1);">delete '+cat_name+'</a>';
-			document.getElementById('delete_confirmation').style.display = 'block';
+			$("#delete_confirmation").show();
 		}
 		return false;
 	}
 	
 	function editCategory(id_cat, name, description, is_plus, is_visible, parent_id) {
-		document.getElementById('form_add_cat').style.display = 'none';
-		document.getElementById('form_edit_cat').style.display = 'block';
+		$("#form_add_cat").hide();
+		$("#form_edit_cat").show();
 		
 		$("#edit_id_cat").val(id_cat);
 		$("#edit_parent_id").val(parent_id);
@@ -24,12 +24,14 @@
 		$("#edit_categoryDescription").val(description);
 		$("#edit_is_plus").val(is_plus);
 		$("#edit_is_visible").prop("checked", is_visible);
+		
+		$("#delete_confirmation").hide();
 		return false;
 	}
 	
 	function editClose() {
-		document.getElementById('form_add_cat').style.display = 'block';
-		document.getElementById('form_edit_cat').style.display = 'none';
+		$("#form_edit_cat").hide();
+		$("#form_add_cat").show();
 	}
 </script>
   
@@ -42,7 +44,7 @@
 				Delete this category? 
 				<label id="id_category_for_delete"><a href="#" onclick="deleteCategory({1, '', 1);">name</a></label>
 				|
-				<label><a href="#" onclick="document.getElementById('delete_confirmation').style.display = 'none';">no</a></label>
+				<label><a href="#" onclick="$('#delete_confirmation').hide();">no</a></label>
 			</div>
 		</div>
 		<div class="table-responsive">
