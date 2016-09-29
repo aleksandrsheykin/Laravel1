@@ -17,7 +17,7 @@ class AdminCategoriesController extends Controller
     }
     public function index()
     {
-        $category = Category::where('is_system', '=', true)->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system'));
+        $category = Category::where('is_system', '=', true)->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
 		//dd($category);
 		$data = [
                 'selected_menu' => 'Categories',
@@ -61,4 +61,23 @@ class AdminCategoriesController extends Controller
 		return $this->index();
 	}	
 	
+	public function edit(Request $request) {
+		//dd($request->input());
+		if ($request->input('editCategory')) {
+			$new_values = [
+						'parent_id'=> $request->input('edit_parent_id'), 
+						'name'=> $request->input('edit_categoryName'), 
+						'description'=> $request->input('edit_categoryDescription'), 
+						'is_plus'=> $request->input('edit_is_plus'), 
+						'is_visible'=> $request->exists('edit_is_visible')
+						];
+			//dd($new_values);
+			
+			$category = Category::where('id', '=' , $request->input('edit_id_cat'))->update($new_values);
+			//dd($category);
+		} else {
+			dd(333);
+		}
+		return $this->index();
+	}
 }
