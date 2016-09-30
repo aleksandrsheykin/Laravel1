@@ -9,7 +9,7 @@
 <div class="row">
 
 	<div class="col-md-9 col-xs-12 col-md-push-3"> <!-- content -->
-	
+	{{ date('Y-m-d', strtotime($date_mainform)) }}
 		<div class="row text-center">	<!-- filter -->
 			<div class="col-md-12">
 				<ul class="pagination" style="margin: 0px;">
