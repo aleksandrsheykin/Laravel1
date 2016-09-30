@@ -20,7 +20,8 @@ class HomeController extends Controller
 		
 		$d = array_get(Route::current()->parameters(), 'date_mainform');	//если дата есть в запросе, то берем, иначе ставим текущую
 		if ($d == null) {
-			$this->setDateMainform(date("d/m/Y"));
+			//$this->setDateMainform(date("d/m/Y"));
+			$this->setDateMainform(date());
 		} else {
 			$this->setDateMainform($d);
 		}		
@@ -28,8 +29,15 @@ class HomeController extends Controller
 
 	public function setDateMainform($d) //привести к нужному для выборки виду
 	{	
+		$d = str_replace('/', '', $d);
 		$this->date_mainform = $d;
 	}
+	
+	public function getDateMainform() 
+	{	
+		//dd($this->date_mainform);
+		return $this->date_mainform;
+	}	
     /**
      * Show the application dashboard.
      *
@@ -38,7 +46,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 		$data = [
-                'date_mainform' => $this->date_mainform
+                'date_mainform' => $this->getDateMainform()
 				];		
         return view('home', $data);
     }
