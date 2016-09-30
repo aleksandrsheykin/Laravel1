@@ -7,19 +7,17 @@
 	}
 </script>
 <div class="row">
-
 	<div class="col-md-9 col-xs-12 col-md-push-3"> <!-- content -->
-	{{ date('Y-m-d', strtotime($date_mainform)) }}
 		<div class="row text-center">	<!-- filter -->
 			<div class="col-md-12">
 				<ul class="pagination" style="margin: 0px;">
-					<li><a href="#">&laquo;</a></li>
-					<li><a href="#">Позавера</a></li>
-					<li><a href="#">Вчера</a></li>
-					<li><a href="#"><input type="date" name="date_gain" value="{{ date('Y-m-d') }}" class="form-control"></a></li>
-					<li><a href="#">Завтра</a></li>
-					<li><a href="#">Послезавтра</a></li>
-					<li><a href="#">&raquo;</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['firstDay']['uriFormat']}}">&laquo;</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayBeforeYesterday']['uriFormat']}}">Позавера</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['yesterday']['uriFormat']}}">Вчера</a></li>
+					<li><a href="{{ Route('home') }}/"><input type="date" name="date_gain" value="{{ $date_mainform }}" class="form-control"></a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['tomorrow']['uriFormat']}}">Завтра</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayAfterTomorrow']['uriFormat']}}">Послезавтра</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['lastDay']['uriFormat']}}">&raquo;</a></li>
 				</ul>
 				<input type="range" class="form-control" min="0" max="31" value="{{ date('d') }}" />
 			</div>
