@@ -16,7 +16,10 @@ Route::get('/settings', 'SettingsController@index')->name('settings');
 
 Auth::routes();
 
+//HomeController have middleware('auth')
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/{date_mainform}', 'HomeController@index')->where('date_mainform', '(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d');	//пропускаем только даты
+
 
 //admins route
 Route::get('/admin', 'AdminController@index')->name('admin')->middleware('admin');
