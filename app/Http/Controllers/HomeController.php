@@ -61,19 +61,19 @@ class HomeController extends Controller
 						],
 				'dayBeforeYesterday' => [
 						'uriFormat' => date("d/m/Y", strtotime("-2 day", strtotime($this->getDateMainform()))),
-						'niceFormat' => $isCurrentDay?'day before yesterday':date("d.m.Y", strtotime("-2 day", strtotime($this->getDateMainform())))
+						'niceFormat' => $isCurrentDay?trans('home.day before yesterday'):date("d.m.Y", strtotime("-2 day", strtotime($this->getDateMainform())))
 						],
 				'yesterday' => [
 						'uriFormat' => date("d/m/Y", strtotime("-1 day", strtotime($this->getDateMainform()))),
-						'niceFormat' => $isCurrentDay?'yesterday':date("d.m.Y", strtotime("-1 day", strtotime($this->getDateMainform())))
+						'niceFormat' => $isCurrentDay?trans('home.yesterday'):date("d.m.Y", strtotime("-1 day", strtotime($this->getDateMainform())))
 						],
 				'tomorrow' => [
 						'uriFormat' => date("d/m/Y", strtotime("+1 day", strtotime($this->getDateMainform()))),
-						'niceFormat' => $isCurrentDay?'tomorrow':date("d.m.Y", strtotime("+1 day", strtotime($this->getDateMainform())))
+						'niceFormat' => $isCurrentDay?trans('home.tomorrow'):date("d.m.Y", strtotime("+1 day", strtotime($this->getDateMainform())))
 						],
 				'dayAfterTomorrow' => [
 						'uriFormat' => date("d/m/Y", strtotime("+2 day", strtotime($this->getDateMainform()))),
-						'niceFormat' => $isCurrentDay?'day after tomorrow':date("d.m.Y", strtotime("+2 day", strtotime($this->getDateMainform())))
+						'niceFormat' => $isCurrentDay?trans('home.day after tomorrow'):date("d.m.Y", strtotime("+2 day", strtotime($this->getDateMainform())))
 						],
 				'lastDay' => [
 						'uriFormat' => date("d/m/Y", strtotime("+3 day", strtotime($this->getDateMainform()))),

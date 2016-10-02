@@ -2,9 +2,12 @@
 
 @section('content')
 <script>
-	function setdate(date) {
-		//
-	}
+	$(document).ready(function(){
+		$('#date_mainform').change(function() {
+			//alert();
+			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
+		});
+	});
 </script>
 <div class="row">
 	<div class="col-md-9 col-xs-12 col-md-push-3"> <!-- content -->
@@ -12,11 +15,19 @@
 			<div class="col-md-12">
 				<ul class="pagination" style="margin: 0px;">
 					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['firstDay']['uriFormat']}}">&laquo;</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayBeforeYesterday']['uriFormat']}}">Позавера</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['yesterday']['uriFormat']}}">Вчера</a></li>
-					<li><a href="{{ Route('home') }}/"><input type="date" name="date_gain" value="{{ $date_mainform }}" class="form-control"></a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['tomorrow']['uriFormat']}}">Завтра</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayAfterTomorrow']['uriFormat']}}">Послезавтра</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayBeforeYesterday']['uriFormat']}}">
+						{{ $date_list_for_uri['dayBeforeYesterday']['niceFormat'] }}
+					</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['yesterday']['uriFormat']}}">
+						{{ $date_list_for_uri['yesterday']['niceFormat'] }}
+					</a></li>
+					<li><a href="#"><input type="date" name="date_mainform" id="date_mainform" value="{{ $date_mainform }}" class="form-control"></a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['tomorrow']['uriFormat']}}">
+						{{ $date_list_for_uri['tomorrow']['niceFormat'] }}
+					</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayAfterTomorrow']['uriFormat']}}">
+						{{ $date_list_for_uri['dayAfterTomorrow']['niceFormat'] }}
+					</a></li>
 					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['lastDay']['uriFormat']}}">&raquo;</a></li>
 				</ul>
 				<input type="range" class="form-control" min="0" max="31" value="{{ date('d') }}" />
@@ -27,7 +38,7 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a class="bg-warning" href="#gain" data-toggle="tab">Расходы</a></li>
 			<li class="bg-success"><a href="#expenses" data-toggle="tab">Доходы</a></li>
-			<li><a href="#move" class="bg-info" data-toggle="tab">Перемещения</a></li>
+			<li><a href="#moving" class="bg-info" data-toggle="tab">Перемещения</a></li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -52,7 +63,7 @@
 					<div class="panel-footer">Panel footer</div>
 				</div>			
 			</div>
-			<div class="tab-pane" id="move">
+			<div class="tab-pane" id="moving">
 				<div class="panel panel-info">
 					<div class="panel-heading">Движение</div>
 					<div class="panel-body">
