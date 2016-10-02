@@ -55,8 +55,8 @@
 						@if (isset($vk_link))
 							<li><a href="{{ $vk_link }}">VK</a></li>
 						@endif
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">{{ trans('home.login') }}</a></li>
+                        <li><a href="{{ url('/register') }}">{{ trans('home.register') }}</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -69,14 +69,14 @@
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
 										<span class="glyphicon glyphicon-log-out"></span>
-                                        Logout
+                                        {{ trans('home.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
-								<li><a href="{{ route('settings') }}"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+								<li><a href="{{ route('settings') }}"><span class="glyphicon glyphicon-cog"></span>{{ trans('home.settings') }}</a></li>
 								
 								@if (isset($admin_link))
 									<li><a href="{{ $admin_link }}">admin</a></li>

@@ -36,9 +36,9 @@
 		
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a class="bg-warning" href="#gain" data-toggle="tab">Расходы</a></li>
-			<li class="bg-success"><a href="#expenses" data-toggle="tab">Доходы</a></li>
-			<li><a href="#moving" class="bg-info" data-toggle="tab">Перемещения</a></li>
+			<li class="active"><a class="bg-warning" href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>
+			<li class="bg-success"><a href="#expenses" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
+			<li><a href="#moving" class="bg-info" data-toggle="tab">{{ trans('home.moving') }}</a></li>
 		</ul>
 
 		<!-- Tab panes -->
