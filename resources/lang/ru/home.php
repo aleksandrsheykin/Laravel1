@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'day before yesterday' => 'Позавчера',
     'yesterday' => 'Вчера',
 	'tomorrow' => 'Завтра',
@@ -12,6 +11,11 @@ return [
 	'register' => 'Регистрация',
 	'login' => 'Авторизация',
 	'settings' => 'Настройки',
-	'logout' => 'Выход'
+	'logout' => 'Выход',
+	'main' => 'Главная',
+	'categories' => 'Категории',
+	'cash accounts' => 'Счета',
+	'know where it is cheaper' => 'Знаю где дешевле',
+	'ask a question' => 'Задать вопрос'
 
 ];

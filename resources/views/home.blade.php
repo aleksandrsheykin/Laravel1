@@ -76,7 +76,7 @@
 		
 	</div>
 	
-	<div class="col-md-3 col-xs-12 col-md-pull-9" style="background: #BCA;"> <!-- left column -->
+	<div class="col-md-3 col-xs-12 col-md-pull-9"> <!-- left column -->
 		@include('layouts.leftmenu')
 	</div>
 	

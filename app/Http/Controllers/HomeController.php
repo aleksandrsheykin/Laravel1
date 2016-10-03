@@ -47,7 +47,8 @@ class HomeController extends Controller
     {
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
-				'date_list_for_uri' => $this->generateDateList($this->getDateMainform())
+				'date_list_for_uri' => $this->generateDateList($this->getDateMainform()),
+				'selected_menu' => 'home',
 				];		
         return view('home', $data);
     }

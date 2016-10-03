@@ -35,7 +35,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="{{ Route('home') }}">Home</a></li>
             <li><a href="{{ Route('settings') }}">Settings</a></li>
             <li><a href="{{ Route('index') }}">Index</a></li>
             <li>
@@ -61,7 +61,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             @if (!isset($selected_menu))
-                <?php $selected_menu = 'overview'; ?>
+				<?php $selected_menu = 'overview' ?>
             @endif
             <li @if ($selected_menu == 'Overview') class="active" @endif><a href="{{ route('admin') }}">Overview</a></li>
 			<li @if ($selected_menu == 'Users') class="active" @endif><a href="{{ route('adminUsers') }}">Users</a></li>
