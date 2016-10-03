@@ -36,15 +36,15 @@
 		
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a class="bg-warning" href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>
-			<li class="bg-success"><a href="#expenses" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
+			<li class="active"><a class="bg-danger" href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>
+			<li><a href="#expenses" class="bg-success" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
 			<li><a href="#moving" class="bg-info" data-toggle="tab">{{ trans('home.moving') }}</a></li>
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div class="tab-pane active" id="gain">
-				<div class="panel panel-warning">
+				<div class="panel panel-danger">
 					<div class="panel-heading">
 						Gain
 					</div>

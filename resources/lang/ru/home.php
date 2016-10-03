@@ -16,6 +16,7 @@ return [
 	'categories' => 'Категории',
 	'cash accounts' => 'Счета',
 	'know where it is cheaper' => 'Знаю где дешевле',
-	'ask a question' => 'Задать вопрос'
+	'ask a question' => 'Задать вопрос',
+	'add category' => 'Добавить категорию'
 
 ];
