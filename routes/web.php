@@ -20,10 +20,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/{date_mainform}', 'HomeController@index')->where('date_mainform', '(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d');	//пропускаем только даты
 
-Route::get('/categories', 'HomeController@index')->name('categories');
-Route::get('/accounts', 'HomeController@index')->name('accounts');
-Route::get('/cheaper', 'HomeController@index')->name('cheaper');
-Route::get('/question', 'HomeController@index')->name('question');
+Route::get('/categories', 'CategoriesController@index')->name('categories');
+Route::get('/accounts', 'AccountsController@index')->name('accounts');
+Route::get('/cheaper', 'CheaperController@index')->name('cheaper');
+Route::get('/question', 'QuestionController@index')->name('question');
 
 
 //admins route

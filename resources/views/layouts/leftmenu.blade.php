@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="list-group">
             @if (!isset($selected_menu))
-				<?php $selected_menu = 'home'; ?>
+				<?php $selected_menu = ''; ?>
             @endif		
 			<a href="{{ route('home') }}" class="list-group-item @if ($selected_menu == 'home') active @endif">{{ trans('home.main') }}</a>
 			<a href="{{ route('categories') }}" class="list-group-item @if ($selected_menu == 'categories') active @endif">{{ trans('home.categories') }}</a>
