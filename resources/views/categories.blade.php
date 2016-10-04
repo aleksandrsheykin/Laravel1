@@ -13,34 +13,34 @@
 		<div class="tab-content">
 
 			<div class="tab-pane active" id="expenses">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="panel panel-danger">
-							<div class="panel-heading">
-								Panel heading without title
+				<div class="panel panel-success">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-8">
+								//
 							</div>
-							<div class="panel-body">
-								Panel content
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="panel panel-default">
-							<div class="panel-heading">{{ trans('home.add category') }}</div>
-							<div class="panel-body">
-								Panel content
-							</div>
+							<div class="col-md-4">
+								<div class="panel panel-default">
+									<div class="panel-heading">Добавить категорию расходов</div>
+									<div class="panel-body">Добавить категорию расходов</div>
+								</div>
+							</div>						
 						</div>
 					</div>
 				</div>
 			</div>
 			
-			<div class="tab-pane" id="gain">
-				<div class="panel panel-success">
-					<div class="panel-heading">Panel heading without title</div>
-					<div class="panel-body">
-						Panel content
+			<div class="tab-pane" id="gain" style="padding-top: 10px;">
+				<div class="row">
+					<div class="col-md-8">
+						//
 					</div>
+					<div class="col-md-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">Добавить категорию расходов</div>
+							<div class="panel-body">Добавить категорию расходов</div>
+						</div>
+					</div>						
 				</div>
 			</div>
 			
