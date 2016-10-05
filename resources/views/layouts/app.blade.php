@@ -76,6 +76,7 @@
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
+								<li><a href="{{ route('home') }}"><span class="glyphicon glyphicon-cog"></span>{{ trans('home.home') }}</a></li>
 								<li><a href="{{ route('settings') }}"><span class="glyphicon glyphicon-cog"></span>{{ trans('home.settings') }}</a></li>
 								
 								@if (isset($admin_link))
