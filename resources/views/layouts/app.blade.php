@@ -64,6 +64,8 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+								<li><a href="{{ route('home') }}"><span class="glyphicon glyphicon-euro"></span> {{ trans('home.accounting') }}</a></li>
+								<li><a href="{{ route('settings') }}"><span class="glyphicon glyphicon-cog"></span> {{ trans('home.settings') }}</a></li>
                                 <li>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();
@@ -76,12 +78,9 @@
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
-								<li><a href="{{ route('home') }}"><span class="glyphicon glyphicon-euro"></span> {{ trans('home.accounting') }}</a></li>
-								<li><a href="{{ route('settings') }}"><span class="glyphicon glyphicon-cog"></span> {{ trans('home.settings') }}</a></li>
-								
 								@if (isset($admin_link))
 									<li><a href="{{ $admin_link }}">admin</a></li>
-								@endif								
+								@endif
                             </ul>
                         </li>
                     @endif

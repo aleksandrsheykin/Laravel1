@@ -18,6 +18,8 @@ return [
 	'know where it is cheaper' => 'Знаю где дешевле',
 	'ask a question' => 'Задать вопрос',
 	'add category' => 'Добавить категорию',
-	'accounting' => 'Учет'
+	'accounting' => 'Учет',
+	'adding category of expenses' => 'Добавить категорию расходов',
+	'adding category of gain' => 'Добавить категорию доходов'
 
 ];
