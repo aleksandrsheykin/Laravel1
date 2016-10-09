@@ -19,7 +19,9 @@ return [
 	'ask a question' => 'Задать вопрос',
 	'add category' => 'Добавить категорию',
 	'accounting' => 'Учет',
-	'adding category of expenses' => 'Добавить категорию расходов',
-	'adding category of gain' => 'Добавить категорию доходов'
+	'add' => 'Добавить',
+	'description' => 'Описание',
+	'name' => 'Наименование',
+	'parent category' => 'Родительская категория'
 
 ];
