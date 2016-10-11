@@ -71,7 +71,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">{{ trans('home.add category') }}</div>
 							<div class="panel-body">
-								<!-- form1-->
+								<!-- form1 -->
 								<form role="form" method="POST" action="{{ route('categories') }}">
 									{{ csrf_field() }}
 									{{ method_field('PUT') }}
@@ -98,7 +98,7 @@
 									</div>
 									<button type="submit" class="btn btn-primary">{{ trans('home.add') }}</button>
 								</form>				
-								<!-- form1-->
+								<!-- form1 -->
 							</div>
 						</div>
 					</div>						
@@ -114,7 +114,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">{{ trans('home.add category') }}</div>
 							<div class="panel-body">
-								<!-- form2-->
+								<!-- form2 -->
 								<form role="form" method="POST" action="{{ route('categories') }}">
 									{{ csrf_field() }}
 									{{ method_field('PUT') }}
@@ -141,7 +141,7 @@
 									</div>
 									<button type="submit" class="btn btn-primary">{{ trans('home.add') }}</button>
 								</form>				
-								<!-- form2-->
+								<!-- form2 -->
 							</div>
 						</div>
 					</div>						
