@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Auth;
 
 class CategoriesController extends Controller
 {
@@ -24,7 +25,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-		$categories = Category::where('is_system', '=', true)->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
+		$categories = Category::where('is_system', '=', true)
+								->orWhere('user_id', Auth::user()->id)
+								->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
 		//dd($categories);
 		$data = [
 				'selected_menu' => 'categories',
