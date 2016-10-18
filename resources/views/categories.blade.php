@@ -48,19 +48,47 @@
 			<div class="tab-pane active" id="expenses" style="padding-top: 10px;">
 				<div class="row">
 					<div class="col-md-7">
-							@if (isset($categories))
-								<table class="table table-hover">				
-									@foreach ($categories as $cat)
-										<tr>
-											<td>{{ $cat->name }}</td>
-											<td>{{ $cat->description }}</td>
-											<td>{{ $cat->is_visible }}</td>
+							@if (isset($cat_expenses))
+								<table class="table table-hover">
+									@foreach ($cat_expenses as $cat)
+										<tr class="active">
+											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
+											<td>{{ $cat['parent']->description }}</td>
 											<td class="text-right">
-												<a href="#" onclick="editCategory({{ $cat->id }}, '{{ $cat->name }}', '{{ $cat->description }}', {{ $cat->is_plus }}, {{ $cat->is_visible }}, {{$cat->parent_id}});">{{ trans('home.edit') }}</a>
-												|
-												<a href="#" onclick="deleteCategory({{ $cat->id }}, '{{ $cat->name }}', 0);">{{ trans('home.delete') }}</a>
+												<div class="btn-group">
+													<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
+													<ul class="dropdown-menu">
+														<li>
+															<a href="#" onclick="editCategory({{ $cat['parent']->id }}, '{{ $cat['parent']->name }}', '{{ $cat['parent']->description }}', {{ $cat['parent']->is_plus }}, {{ $cat['parent']->is_visible }}, {{$cat['parent']->parent_id}});">{{ trans('home.edit') }}</a>
+														</li>
+														<li>
+															<a href="#" onclick="deleteCategory({{ $cat['parent']->id }}, '{{ $cat['parent']->name }}', 0);">{{ trans('home.delete') }}</a>
+														</li>
+													</ul>
+												</div>
 											</td>
-										</tr>	
+										</tr>
+										@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
+											@foreach ($cat['childs'] as $child)
+												<tr>
+													<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
+													<td style="padding-left: 30px;">{{ $child->description }}</td>
+													<td class="text-right">
+														<div class="btn-group">
+															<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li>
+																	<a href="#" onclick="editCategory({{ $child->id }}, '{{ $child->name }}', '{{ $child->description }}', {{ $child->is_plus }}, {{ $child->is_visible }}, {{ $child->parent_id}});">{{ trans('home.edit') }}</a>
+																</li>
+																<li>
+																	<a href="#" onclick="deleteCategory({{ $child->id }}, '{{ $child->name }}', 0);">{{ trans('home.delete') }}</a>
+																</li>
+															</ul>
+														</div>
+													</td>
+												</tr>
+											@endforeach
+										@endif
 									@endforeach
 								</table>							
 							@else
@@ -78,14 +106,13 @@
 									<select style="display: none;" id="is_plus" name="is_plus">
 										<option value="1" selected>1</option>
 									</select>
-									<input type="hidden" name="is_visible" id="is_visible" value="is_visible" checked>
 									
 									<div class="form-group">
 										<select class="form-control" id="parent_id" name="parent_id">
 											<option value="0">{{ trans('home.parent category') }}</option>
-											@if (isset($category))
-												@foreach ($category as $cat)
-													<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+											@if (isset($cat_expenses))
+												@foreach ($cat_expenses as $cat)
+													<option value="{{ $cat['parent']->id }}">{{ $cat['parent']->name }}</option>
 												@endforeach
 											@endif
 										</select>
@@ -96,7 +123,16 @@
 									<div class="form-group">
 										<textarea class="form-control" rows="3" id="categoryDescription" name="categoryDescription" placeholder="{{ trans('home.description') }}">{{ old('categoryDescription') }}</textarea>
 									</div>
-									<button type="submit" class="btn btn-primary">{{ trans('home.add') }}</button>
+									<div class="form-group">
+										<label>
+											<input type="checkbox" name="is_visible" id="is_visible" value="is_visible" checked>
+											Видимая
+										</label>
+										<span class="help-block">
+											<strong>Показывать в общем списке (можно отключить категории которые Вы перестали использовать)</strong>
+										</span>										
+									</div>
+									<button type="submit" value="addCategory" name="addCategory" class="btn btn-primary">{{ trans('home.add') }}</button>
 								</form>				
 								<!-- form1 -->
 							</div>
@@ -121,7 +157,6 @@
 									<select style="display: none;" id="is_plus" name="is_plus">
 										<option value="0" selected>2</option>
 									</select>
-									<input type="hidden" name="is_visible" id="is_visible" value="is_visible" checked>
 									
 									<div class="form-group">
 										<select class="form-control" id="parent_id" name="parent_id">
