@@ -20,7 +20,7 @@
 		
 		$("#edit_id_cat").val(id_cat);
 		$("#edit_parent_id").val(parent_id);
-		$("#edit_categoryName").val(name);
+		$("#edit_categoryName").val("Delete "+name);
 		$("#edit_categoryDescription").val(description);
 		$("#edit_is_plus").val(is_plus);
 		$("#edit_is_visible").prop("checked", is_visible);

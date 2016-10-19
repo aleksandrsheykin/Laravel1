@@ -3,14 +3,16 @@
 @section('content')
 <script>
 	function deleteCategory(id_cat, cat_name, confirm) {
-		if (confirm > 0) {
+		$('#modalDelete').modal();
+		document.getElementById('delete-category-name').innerHTML = can_name;
+		/*if (confirm > 0) {
 			event.preventDefault(); 
 			document.getElementById('cat_del_form_'+id_cat).submit();
-		} else {	//показать диалог подтверждения удаления
+		} else {	//показать модальный диалог подтверждения удаления
 			document.getElementById('id_category_for_delete').innerHTML = '<a href="#" onclick="deleteCategory('+id_cat+', 0, 1);">delete '+cat_name+'</a>';
 			$("#delete_confirmation").show();
 		}
-		return false;
+		return false;*/
 	}
 	
 	function editCategory(id_cat, name, description, is_plus, is_visible, parent_id) {
@@ -48,9 +50,10 @@
 			<div class="tab-pane active" id="expenses" style="padding-top: 10px;">
 				<div class="row">
 					<div class="col-md-7">
-							@if (isset($cat_expenses))
-								<table class="table table-hover">
-									@foreach ($cat_expenses as $cat)
+						@if (isset($cat_expenses))
+							<table class="table table-hover">
+								@foreach ($cat_expenses as $cat)
+									@if (isset($cat['parent']))	{{-- Есть ли родитель (если нет, то путаница какая-то произошла) --}}
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
@@ -68,32 +71,33 @@
 												</div>
 											</td>
 										</tr>
-										@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
-											@foreach ($cat['childs'] as $child)
-												<tr>
-													<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
-													<td style="padding-left: 30px;">{{ $child->description }}</td>
-													<td class="text-right">
-														<div class="btn-group">
-															<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
-															<ul class="dropdown-menu">
-																<li>
-																	<a href="#" onclick="editCategory({{ $child->id }}, '{{ $child->name }}', '{{ $child->description }}', {{ $child->is_plus }}, {{ $child->is_visible }}, {{ $child->parent_id}});">{{ trans('home.edit') }}</a>
-																</li>
-																<li>
-																	<a href="#" onclick="deleteCategory({{ $child->id }}, '{{ $child->name }}', 0);">{{ trans('home.delete') }}</a>
-																</li>
-															</ul>
-														</div>
-													</td>
-												</tr>
-											@endforeach
-										@endif
-									@endforeach
-								</table>							
-							@else
-							//	
-							@endif
+									@endif
+									@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
+										@foreach ($cat['childs'] as $child)
+											<tr>
+												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
+												<td style="padding-left: 30px;">{{ $child->description }}</td>
+												<td class="text-right">
+													<div class="btn-group">
+														<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
+														<ul class="dropdown-menu">
+															<li>
+																<a href="#" onclick="editCategory({{ $child->id }}, '{{ $child->name }}', '{{ $child->description }}', {{ $child->is_plus }}, {{ $child->is_visible }}, {{ $child->parent_id}});">{{ trans('home.edit') }}</a>
+															</li>
+															<li>
+																<a href="#" onclick="deleteCategory({{ $child->id }}, '{{ $child->name }}', 0);">{{ trans('home.delete') }}</a>
+															</li>
+														</ul>
+													</div>
+												</td>
+											</tr>
+										@endforeach
+									@endif
+								@endforeach
+							</table>							
+						@else
+						//	
+						@endif
 					</div>
 					<div class="col-md-5">
 						<div class="panel panel-default">
@@ -112,7 +116,9 @@
 											<option value="0">{{ trans('home.parent category') }}</option>
 											@if (isset($cat_expenses))
 												@foreach ($cat_expenses as $cat)
-													<option value="{{ $cat['parent']->id }}">{{ $cat['parent']->name }}</option>
+													@if (isset($cat['parent']))
+														<option value="{{ $cat['parent']->id }}">{{ $cat['parent']->name }}</option>
+													@endif
 												@endforeach
 											@endif
 										</select>
@@ -191,6 +197,25 @@
 		@include('layouts.leftmenu')
 	</div>
 	
+</div>
+
+<!-- Modal on Delete -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">{{ trans('home.confirmation delete') }}</h4>
+			</div>
+			<div class="modal-body" id="modal-body">
+				Удалить категорию <label id="delete-category-name">name</label>? 
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('home.close') }}</button>
+				<button type="button" class="btn btn-danger">{{ trans('home.delete') }}</button>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 

@@ -37,6 +37,7 @@ class CategoriesController extends Controller
 								->orderBy('name')
 								->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
 								
+		//dd($cat_expenses);
 		//dd($this->createCategoryTree($cat_expenses));
 		
 		$data = [
