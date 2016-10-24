@@ -2,17 +2,12 @@
 
 @section('content')
 <script>
-	function deleteCategory(id_cat, cat_name, confirm) {
+	function deleteCategory(id_cat, cat_name, url) {
 		$('#modalDelete').modal();
-		document.getElementById('delete-category-name').innerHTML = can_name;
-		/*if (confirm > 0) {
-			event.preventDefault(); 
-			document.getElementById('cat_del_form_'+id_cat).submit();
-		} else {	//показать модальный диалог подтверждения удаления
-			document.getElementById('id_category_for_delete').innerHTML = '<a href="#" onclick="deleteCategory('+id_cat+', 0, 1);">delete '+cat_name+'</a>';
-			$("#delete_confirmation").show();
-		}
-		return false;*/
+		document.getElementById('delete-category-name').innerHTML = cat_name;	//был бухой
+		$('#delete-button').attr('action', url);
+
+		return false;
 	}
 	
 	function editCategory(id_cat, name, description, is_plus, is_visible, parent_id) {
@@ -59,15 +54,17 @@
 											<td>{{ $cat['parent']->description }}</td>
 											<td class="text-right">
 												<div class="btn-group">
-													<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
-													<ul class="dropdown-menu">
-														<li>
-															<a href="#" onclick="editCategory({{ $cat['parent']->id }}, '{{ $cat['parent']->name }}', '{{ $cat['parent']->description }}', {{ $cat['parent']->is_plus }}, {{ $cat['parent']->is_visible }}, {{$cat['parent']->parent_id}});">{{ trans('home.edit') }}</a>
-														</li>
-														<li>
-															<a href="#" onclick="deleteCategory({{ $cat['parent']->id }}, '{{ $cat['parent']->name }}', 0);">{{ trans('home.delete') }}</a>
-														</li>
-													</ul>
+													@if (!$cat['parent']->is_system)
+														<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
+														<ul class="dropdown-menu">
+															<li>
+																<a href="#" onclick="editCategory({{ $cat['parent']->id }}, '{{ $cat['parent']->name }}', '{{ $cat['parent']->description }}', {{ $cat['parent']->is_plus }}, {{ $cat['parent']->is_visible }}, {{$cat['parent']->parent_id}});">{{ trans('home.edit') }}</a>
+															</li>
+															<li>
+																<a href="#" onclick="deleteCategory({{ $cat['parent']->id }}, '{{ $cat['parent']->name }}', '{{ Route('categoriesDel', ['id_category' => $cat['parent']->id]) }}');">{{ trans('home.delete') }}</a>
+															</li>
+														</ul>
+													@endif
 												</div>
 											</td>
 										</tr>
@@ -79,15 +76,17 @@
 												<td style="padding-left: 30px;">{{ $child->description }}</td>
 												<td class="text-right">
 													<div class="btn-group">
-														<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
-														<ul class="dropdown-menu">
-															<li>
-																<a href="#" onclick="editCategory({{ $child->id }}, '{{ $child->name }}', '{{ $child->description }}', {{ $child->is_plus }}, {{ $child->is_visible }}, {{ $child->parent_id}});">{{ trans('home.edit') }}</a>
-															</li>
-															<li>
-																<a href="#" onclick="deleteCategory({{ $child->id }}, '{{ $child->name }}', 0);">{{ trans('home.delete') }}</a>
-															</li>
-														</ul>
+														@if (!$child->is_system)
+															<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li>
+																	<a href="#" onclick="editCategory({{ $child->id }}, '{{ $child->name }}', '{{ $child->description }}', {{ $child->is_plus }}, {{ $child->is_visible }}, {{ $child->parent_id}});">{{ trans('home.edit') }}</a>
+																</li>
+																<li>
+																	<a href="#" onclick="deleteCategory({{ $child->id }}, '{{ $child->name }}', '{{ Route('categoriesDel', ['id_category' => $child->id]) }}');">{{ trans('home.delete') }}</a>
+																</li>
+															</ul>
+														@endif
 													</div>
 												</td>
 											</tr>
@@ -132,10 +131,10 @@
 									<div class="form-group">
 										<label>
 											<input type="checkbox" name="is_visible" id="is_visible" value="is_visible" checked>
-											Видимая
+											{{ trans('home.visible') }}
 										</label>
 										<span class="help-block">
-											<strong>Показывать в общем списке (можно отключить категории которые Вы перестали использовать)</strong>
+											<strong>{{ trans('home.Show in the list (you can disable the category that you no longer use)') }}</strong>
 										</span>										
 									</div>
 									<button type="submit" value="addCategory" name="addCategory" class="btn btn-primary">{{ trans('home.add') }}</button>
@@ -211,8 +210,10 @@
 				Удалить категорию <label id="delete-category-name">name</label>? 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('home.close') }}</button>
-				<button type="button" class="btn btn-danger">{{ trans('home.delete') }}</button>
+				<form action="" id="delete-button">
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('home.close') }}</button>
+					<button type="submit" class="btn btn-danger">{{ trans('home.delete') }}</button>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use Auth;
+use Route;
 
 class CategoriesController extends Controller
 {
@@ -36,9 +37,6 @@ class CategoriesController extends Controller
 								->orWhere('user_id', Auth::user()->id)
 								->orderBy('name')
 								->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
-								
-		//dd($cat_expenses);
-		//dd($this->createCategoryTree($cat_expenses));
 		
 		$data = [
 				'selected_menu' => 'categories',
@@ -65,8 +63,16 @@ class CategoriesController extends Controller
 			dd(222);	//я сюда не должен попасть
 		}
         
-		return $this->index();
+		return redirect()->route('categories');
     }
+	
+    public function del()
+    {
+		$id_category = Route::current()->parameters()['id_category'];
+		$category = Category::find($id_category);
+		//dd($category);
+		return redirect()->route('categories');
+	}	
 	
 	public function createCategoryTree($categories) {
 		$r = array();

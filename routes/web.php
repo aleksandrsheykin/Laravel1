@@ -22,6 +22,8 @@ Route::get('/home/{date_mainform}', 'HomeController@index')->where('date_mainfor
 
 Route::get('/categories', 'CategoriesController@index')->name('categories');
 Route::put('/categories', 'CategoriesController@put')->name('categoriesPut');
+Route::get('/categories/del/{id_category}', 'CategoriesController@del')->where('id_category', '\d+')->name('categoriesDel');
+
 Route::get('/accounts', 'AccountsController@index')->name('accounts');
 Route::get('/cheaper', 'CheaperController@index')->name('cheaper');
 Route::get('/question', 'QuestionController@index')->name('question');
