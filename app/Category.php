@@ -10,7 +10,9 @@ class Category extends Model {
 	
     public function __construct($attributes = array())
     {
-		$this->attributes['user_id'] = Auth::User()->id;	//по умолчанию берем категории только своего юзера
+		if (Auth::check()) {
+			$this->attributes['user_id'] = Auth::User()->id;	//по умолчанию берем категории только своего юзера
+		}
         parent::__construct($attributes);
     }	
 
