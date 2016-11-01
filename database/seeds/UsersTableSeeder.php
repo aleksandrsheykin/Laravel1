@@ -18,5 +18,13 @@ class UsersTableSeeder extends Seeder
 			'password' => bcrypt(str_random(20)),
 			'vk_id' => '6125131'
         ]);
+		
+        DB::table('users')->insert([
+            'firstname' => 'Test',
+            'lastname' => 'Test',
+            'email' => 'test@test.com',
+			'password' => bcrypt('testtest'),
+			'vk_id' => 0
+        ]);		
     }
 }
