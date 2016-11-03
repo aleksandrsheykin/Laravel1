@@ -72,6 +72,25 @@ class CategoriesController extends Controller
 		$category = Category::find($id_category);
 		//dd($category);
 		return redirect()->route('categories');
+	}
+
+	public function edit(Request $request) {
+		//dd($request->input());
+		if ($request->input('editCategory')) {
+			$new_values = [
+						'parent_id'=> $request->input('edit_parent_id'), 
+						'name'=> $request->input('edit_cat_name'), 
+						'description'=> $request->input('edit_categoryDescription'), 
+						'is_visible'=> $request->exists('edit_is_visible')
+						];
+			//dd($new_values);
+			
+			$category = Category::where('id', '=' , $request->input('edit_id_cat'))->update($new_values);
+			//dd($category);
+		} else {
+			dd(333);
+		}
+		return $this->index();
 	}	
 	
 	public function createCategoryTree($categories) {
