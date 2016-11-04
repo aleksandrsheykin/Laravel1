@@ -3,14 +3,12 @@
 @section('content')
 <script>
 	$(document).ready(function(){
-		@if (isset($active_tab))
-			$('.nav-tabs a[href="#{{$active_tab}}"]').tab('show');
-		@endif
+		
+		$('.nav-tabs a[href="#'+getCookie('active_tab')+'"]').tab('show');
 		
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			var active_tab = String(e.target).split('#')[1]; // активная вкладка
-			alert(active_tab);
-			
+			setCookie('active_tab', active_tab);
 		});	
 				
 	});
