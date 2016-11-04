@@ -33,5 +33,6 @@ return [
 	'alter category' => 'Изменить категорию',
 	'save' => 'Сохранить',
 	'cancel' => 'Отмена',
+	'category not found' => "Категории не найдены"
 
 ];

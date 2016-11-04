@@ -35,26 +35,26 @@ class User extends Authenticatable
 	
 	public function getCategories()
 	{
-		return $this->hasMany('Category');
+		return $this->hasMany('App\Category');
 	}
 
 	public function getCash()
 	{
-		return $this->hasMany('Cash');
+		return $this->hasMany('App\Cash');
 	}
 
 	public function getMovements()
 	{
-		return $this->hasMany('Movement');
+		return $this->hasMany('App\Movement');
 	}
 
 	public function getBalances()
 	{
-		return $this->hasMany('Balance');
+		return $this->hasMany('App\Balance');
 	}
 
 	public function getDescriptionDay()
 	{
-		return $this->hasMany('DescriptionDay');
+		return $this->hasMany('App\DescriptionDay');
 	}	
 }

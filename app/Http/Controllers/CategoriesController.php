@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use Auth;
 use Route;
+use App\User;
 
 class CategoriesController extends Controller
 {
@@ -26,22 +27,21 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-		$cat_expenses = Category::where('is_system', '=', true) //категории расходов
+		$cat_expenses = Category::where('user_id', Auth::user()->id) //категории расходов
 								->where('is_plus', '=', false)
-								->orWhere('user_id', Auth::user()->id)
 								->orderBy('name')
 								->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
 								
-		$cat_gain = Category::where('is_system', '=', true)	//категории доходов
+		$cat_gain = Category::where('user_id', Auth::user()->id)	//категории доходов
 								->where('is_plus', '=', true)
-								->orWhere('user_id', Auth::user()->id)
 								->orderBy('name')
 								->get(array('id', 'name', 'description', 'is_visible', 'is_plus', 'is_system', 'parent_id'));
 		
+		//dd($cat_expenses);
 		$data = [
 				'selected_menu' => 'categories',
 				'cat_expenses' => $this->createCategoryTree($cat_expenses),
-				'cat_gain' => $cat_gain
+				'cat_gain' => $this->createCategoryTree($cat_gain),
 				];		
         return view('categories', $data);
     }
@@ -75,25 +75,28 @@ class CategoriesController extends Controller
 	}
 
 	public function edit(Request $request) {
-		//dd($request->input());
 		if ($request->input('editCategory')) {
-			$new_values = [
-						'parent_id'=> $request->input('edit_parent_id'), 
-						'name'=> $request->input('edit_cat_name'), 
-						'description'=> $request->input('edit_categoryDescription'), 
-						'is_visible'=> $request->exists('edit_is_visible')
-						];
-			//dd($new_values);
-			
-			$category = Category::where('id', '=' , $request->input('edit_id_cat'))->update($new_values);
-			//dd($category);
+			$user_id = Auth::User()->id;
+			$category_owner = Category::where('id', '=', $request->input('edit_id_cat'))->get(array('user_id'))[0]->user_id;
+
+			if ($category_owner == $user_id) {	//если категория принадлежит авторизованному пользователю, то можно редактировать
+				$new_values = [
+							'parent_id'=> $request->input('edit_parent_id'), 
+							'name'=> $request->input('edit_cat_name'), 
+							'description'=> $request->input('edit_categoryDescription'), 
+							'is_visible'=> $request->exists('edit_is_visible')
+							];				
+				$category = Category::where('id', '=' , $request->input('edit_id_cat'))->update($new_values);
+			}
 		} else {
 			dd(333);
 		}
-		return $this->index();
+		return redirect()->route('categories');
 	}	
 	
 	public function createCategoryTree($categories) {
+		if ($categories->count() == 0) return;
+		
 		$r = array();
 		foreach ($categories as $val) {
 			if ($val->parent_id) {

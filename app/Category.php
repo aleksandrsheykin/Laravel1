@@ -11,10 +11,18 @@ class Category extends Model {
     public function __construct($attributes = array())
     {
 		if (Auth::check()) {
-			$this->attributes['user_id'] = Auth::User()->id;	//по умолчанию берем категории только своего юзера
+			$this->attributes['user_id'] = Auth::User()->id;	//создаем категории только своего юзера
 		}
         parent::__construct($attributes);
     }	
+	
+	/*public protected function where(attributes = array())
+	{
+		if (Auth::check()) {
+			$this->attributes['user_id'] = Auth::User()->id;	//берем категории только своего юзера
+		}
+        parent::where($attributes);
+    }	*/
 
 	protected $table = 'categories';
 	
