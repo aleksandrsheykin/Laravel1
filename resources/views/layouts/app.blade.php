@@ -16,6 +16,7 @@
     <!-- Scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/js/moment.min.js"></script>
+	<script src="/js/js.js"></script>
 
     <script>
         window.Laravel = <?php echo json_encode([

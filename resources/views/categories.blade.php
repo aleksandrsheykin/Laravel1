@@ -2,22 +2,24 @@
 
 @section('content')
 <script>
-	/*$(document).ready(function(){
+	$(document).ready(function(){
 		@if (isset($active_tab))
 			$('.nav-tabs a[href="#{{$active_tab}}"]').tab('show');
 		@endif
+		
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var active_tab = String(e.target).split('#')[1]; // активная вкладка
+			alert(active_tab);
+			
+		});	
+				
 	});
 	
-	$('a[data-toggle="tab"]').on('show',function(e){
-		alert(123);
-		//e.target // Р°РєС‚РёРІРЅР°СЏ РІРєР»Р°РґРєР°
-	});	*/
 
 	function deleteCategory(id_cat, cat_name, url) {
 		$('#modalDelete').modal();
-		document.getElementById('delete-category-name').innerHTML = cat_name;	//Р±С‹Р» Р±СѓС…РѕР№
+		document.getElementById('delete-category-name').innerHTML = cat_name;	//был бухой
 		$('#delete-button').attr('action', url);
-
 		return false;
 	}
 	
@@ -65,7 +67,7 @@
 						@if (isset($cat_expenses))
 							<table class="table table-hover">
 								@foreach ($cat_expenses as $cat)
-									@if (isset($cat['parent']))	{{-- Р•СЃС‚СЊ Р»Рё СЂРѕРґРёС‚РµР»СЊ (РµСЃР»Рё РЅРµС‚, С‚Рѕ РїСѓС‚Р°РЅРёС†Р° РєР°РєР°СЏ-С‚Рѕ РїСЂРѕРёР·РѕС€Р»Р°) --}}
+									@if (isset($cat['parent']))	{{-- Есть ли родитель (если нет, то путаница какая-то произошла) --}}
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
@@ -91,7 +93,7 @@
 											</td>
 										</tr>
 									@endif
-									@if (isset($cat['childs']))	{{-- Р•СЃР»Рё РµСЃС‚СЊ РґРµС‚Рё, С‚Рѕ РІС‹РІРѕРґРёРј --}}
+									@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
 										@foreach ($cat['childs'] as $child)
 											<tr>
 												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
@@ -229,7 +231,7 @@
 						@if (isset($cat_gain))
 							<table class="table table-hover">
 								@foreach ($cat_gain as $cat)
-									@if (isset($cat['parent']))	{{-- Р•СЃС‚СЊ Р»Рё СЂРѕРґРёС‚РµР»СЊ (РµСЃР»Рё РЅРµС‚, С‚Рѕ РїСѓС‚Р°РЅРёС†Р° РєР°РєР°СЏ-С‚Рѕ РїСЂРѕРёР·РѕС€Р»Р°) --}}
+									@if (isset($cat['parent']))	{{-- Есть ли родитель (если нет, то путаница какая-то произошла) --}}
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
@@ -255,7 +257,7 @@
 											</td>
 										</tr>
 									@endif
-									@if (isset($cat['childs']))	{{-- Р•СЃР»Рё РµСЃС‚СЊ РґРµС‚Рё, С‚Рѕ РІС‹РІРѕРґРёРј --}}
+									@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
 										@foreach ($cat['childs'] as $child)
 											<tr>
 												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
@@ -406,7 +408,7 @@
 				<h4 class="modal-title" id="myModalLabel">{{ trans('home.confirmation delete') }}</h4>
 			</div>
 			<div class="modal-body" id="modal-body">
-				РЈРґР°Р»РёС‚СЊ РєР°С‚РµРіРѕСЂРёСЋ <label id="delete-category-name">name</label>? 
+				Удалить категорию <label id="delete-category-name">name</label>? 
 			</div>
 			<div class="modal-footer">
 				<form action="" id="delete-button">
@@ -418,5 +420,4 @@
 	</div>
 </div>
 @endsection
-
 
