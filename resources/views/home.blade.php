@@ -8,29 +8,48 @@
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});
 	});
+
+	function SlipRange(newVal){
+		var d = moment($("#date_mainform").val());
+		//$("#myspan").text( d.set('date', parseInt(newVal)+1) );
+		
+		$("#date_mainform").val(d.set('date', newVal).format("YYYY-MM-DD"));
+		
+		$("#dayBeforeYesterday").text(d.set('date', newVal-2).format("DD.MM.YYYY"));
+		$("#yesterday").text(d.set('date', newVal-1).format("DD.MM.YYYY"));
+		$("#tomorrow").text(d.set('date', parseInt(newVal)+1).format("DD.MM.YYYY"));
+		$("#dayAfterTomorrow").text(d.set('date', parseInt(newVal)+2).format("DD.MM.YYYY"));
+		
+		/*$("#dayBeforeYesterday").text(d.set('date', newVal+3).format("DD.MM.YYYY"));
+		$("#date_mainform").val(d.format("YYYY-MM-DD"));
+		$("#date_mainform").val(d.format("YYYY-MM-DD"));*/
+		
+	}
+	
 </script>
 <div class="row">
 	<div class="col-md-9 col-xs-12 col-md-push-3"> <!-- content -->
 		<div class="row text-center">	<!-- filter -->
+		<span id="myspan">1</span>
 			<div class="col-md-12">
 				<ul class="pagination" style="margin: 0px;">
 					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['firstDay']['uriFormat']}}">&laquo;</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayBeforeYesterday']['uriFormat']}}">
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayBeforeYesterday']['uriFormat']}}" id="dayBeforeYesterday">
 						{{ $date_list_for_uri['dayBeforeYesterday']['niceFormat'] }}
 					</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['yesterday']['uriFormat']}}">
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['yesterday']['uriFormat']}}" id="yesterday">
 						{{ $date_list_for_uri['yesterday']['niceFormat'] }}
 					</a></li>
 					<li><a href="#"><input type="date" name="date_mainform" id="date_mainform" value="{{ $date_mainform }}" class="form-control"></a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['tomorrow']['uriFormat']}}">
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['tomorrow']['uriFormat']}}" id="tomorrow">
 						{{ $date_list_for_uri['tomorrow']['niceFormat'] }}
 					</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayAfterTomorrow']['uriFormat']}}">
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayAfterTomorrow']['uriFormat']}}" id="dayAfterTomorrow">
 						{{ $date_list_for_uri['dayAfterTomorrow']['niceFormat'] }}
 					</a></li>
 					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['lastDay']['uriFormat']}}">&raquo;</a></li>
 				</ul>
-				<input type="range" class="form-control" min="0" max="31" value="{{ date('d') }}" />
+				<input type="range" class="form-control" min="1" max="<?php echo cal_days_in_month(CAL_GREGORIAN, date('m'), date('y')); ?>" value="{{ date('d') }}" oninput="SlipRange(this.value)" onchange="SlipRange(this.value)"/>
 			</div>
 		</div>
 		

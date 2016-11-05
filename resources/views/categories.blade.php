@@ -3,16 +3,13 @@
 @section('content')
 <script>
 	$(document).ready(function(){
-		
 		$('.nav-tabs a[href="#'+getCookie('active_tab')+'"]').tab('show');
 		
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 			var active_tab = String(e.target).split('#')[1]; // активная вкладка
 			setCookie('active_tab', active_tab);
 		});	
-				
 	});
-	
 
 	function deleteCategory(id_cat, cat_name, url) {
 		$('#modalDelete').modal();
@@ -48,7 +45,6 @@
 		$("#form_add_"+pref).show();
 	}
 </script>
-
 <div class="row">
 	<div class="col-md-9 col-xs-12 col-md-push-3"> <!-- content -->
 		<!-- Nav tabs -->
@@ -69,7 +65,7 @@
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
-											<td class="text-right">
+											<td class="text-right" style="min-width: 55px;">
 												@if (!$cat['parent']->is_visible)
 													<div class="btn-group">
 														<span class="glyphicon glyphicon-eye-close"></span>
@@ -96,7 +92,8 @@
 											<tr>
 												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
 												<td style="padding-left: 30px;">{{ $child->description }}</td>
-												<td class="text-right">
+												<td class="text-right" style="min-width: 55px;">
+													<div>
 													@if (!$child->is_visible)
 														<div class="btn-group">
 															<span class="glyphicon glyphicon-eye-close"></span>
@@ -115,6 +112,7 @@
 															</ul>
 														</div>															
 													@endif
+													</div>
 												</td>
 											</tr>
 										@endforeach
@@ -233,7 +231,7 @@
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
-											<td class="text-right">
+											<td class="text-right" style="min-width: 55px;">
 												@if (!$cat['parent']->is_visible)
 													<div class="btn-group">
 														<span class="glyphicon glyphicon-eye-close"></span>
@@ -260,7 +258,7 @@
 											<tr>
 												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
 												<td style="padding-left: 30px;">{{ $child->description }}</td>
-												<td class="text-right">
+												<td class="text-right" style="min-width: 55px;">
 													@if (!$child->is_visible)
 														<div class="btn-group">
 															<span class="glyphicon glyphicon-eye-close"></span>
