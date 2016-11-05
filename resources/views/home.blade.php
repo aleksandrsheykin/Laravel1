@@ -6,34 +6,43 @@
 		$('#date_mainform').change(function() {
 			//alert();
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
-		});
+		});	
 	});
 
-	function SlipRange(newVal){
+	function SlipRange(newVal) {
 		var d = moment($("#date_mainform").val());
-		//$("#myspan").text( d.set('date', parseInt(newVal)+1) );
+		var url = "{{ Route('home') }}" + "/";
 		
-		$("#date_mainform").val(d.set('date', newVal).format("YYYY-MM-DD"));
-		
-		$("#dayBeforeYesterday").text(d.set('date', newVal-2).format("DD.MM.YYYY"));
-		$("#yesterday").text(d.set('date', newVal-1).format("DD.MM.YYYY"));
+		$("#date_mainform").val(d.set('date', parseInt(newVal)).format("YYYY-MM-DD"));
+		$("#dayBeforeYesterday").text(d.set('date', parseInt(newVal)-2).format("DD.MM.YYYY"));
+		$("#yesterday").text(d.set('date', parseInt(newVal)-1).format("DD.MM.YYYY"));
 		$("#tomorrow").text(d.set('date', parseInt(newVal)+1).format("DD.MM.YYYY"));
 		$("#dayAfterTomorrow").text(d.set('date', parseInt(newVal)+2).format("DD.MM.YYYY"));
+
+		//$("#myspan").text( url );
+		$("#firstDayUrl").attr("href", url+d.set('date', parseInt(newVal)-3).format("DD/MM/YYYY"));
+		$("#dayBeforeYesterday").attr("href", url+d.set('date', parseInt(newVal)-2).format("DD/MM/YYYY"));
+		$("#yesterday").attr("href", url+d.set('date', parseInt(newVal)-1).format("DD/MM/YYYY"));
+		$("#tomorrow").attr("href", url+d.set('date', parseInt(newVal)+1).format("DD/MM/YYYY"));
+		$("#dayAfterTomorrow").attr("href", url+d.set('date', parseInt(newVal)+2).format("DD/MM/YYYY"));
+		$("#lastDayUrl").attr("href", url+d.set('date', parseInt(newVal)+3).format("DD/MM/YYYY"));
 		
-		/*$("#dayBeforeYesterday").text(d.set('date', newVal+3).format("DD.MM.YYYY"));
-		$("#date_mainform").val(d.format("YYYY-MM-DD"));
-		$("#date_mainform").val(d.format("YYYY-MM-DD"));*/
+		return false;
 		
 	}
 	
+	function onMouseUpRande() {
+		$('#date_mainform').change();
+	}
+	
 </script>
+
 <div class="row">
 	<div class="col-md-9 col-xs-12 col-md-push-3"> <!-- content -->
 		<div class="row text-center">	<!-- filter -->
-		<span id="myspan">1</span>
 			<div class="col-md-12">
 				<ul class="pagination" style="margin: 0px;">
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['firstDay']['uriFormat']}}">&laquo;</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['firstDay']['uriFormat']}}" id="firstDayUrl">&laquo;</a></li>
 					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayBeforeYesterday']['uriFormat']}}" id="dayBeforeYesterday">
 						{{ $date_list_for_uri['dayBeforeYesterday']['niceFormat'] }}
 					</a></li>
@@ -47,9 +56,12 @@
 					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['dayAfterTomorrow']['uriFormat']}}" id="dayAfterTomorrow">
 						{{ $date_list_for_uri['dayAfterTomorrow']['niceFormat'] }}
 					</a></li>
-					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['lastDay']['uriFormat']}}">&raquo;</a></li>
+					<li><a href="{{ Route('home') }}/{{$date_list_for_uri['lastDay']['uriFormat']}}" id="lastDayUrl">&raquo;</a></li>
 				</ul>
-				<input type="range" class="form-control" min="1" max="<?php echo cal_days_in_month(CAL_GREGORIAN, date('m'), date('y')); ?>" value="{{ date('d') }}" oninput="SlipRange(this.value)" onchange="SlipRange(this.value)"/>
+				<input type="range" class="form-control" 
+				min="1" max="<?php echo cal_days_in_month(CAL_GREGORIAN, date('m'), date('y')); //Кол-во дней в месяце ?>" 
+				value="<?php echo explode("-", $date_mainform)[2]; //текущий день ?>" oninput="SlipRange(this.value)" 
+				onchange="SlipRange(this.value)" onMouseUp="onMouseUpRande()"/>
 			</div>
 		</div>
 		
