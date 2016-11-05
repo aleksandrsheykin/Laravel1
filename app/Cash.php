@@ -1,6 +1,11 @@
 <?php
+namespace App;
 
-class Cash extends Eloquent {
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Auth;
+
+class Cash extends Authenticatable {
 
 	protected $table = 'cash';
 	public $timestamps = true;
