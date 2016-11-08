@@ -1,8 +1,9 @@
 <?php
 
 namespace App;
+use Illuminate\Database\Eloquent\Model;
 
-class Balance extends Eloquent {
+class Balance extends Model {
 
 	protected $table = 'balance';
 	public $timestamps = false;

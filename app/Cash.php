@@ -1,11 +1,9 @@
 <?php
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Auth;
+use Illuminate\Database\Eloquent\Model;
 
-class Cash extends Authenticatable {
+class Cash extends Model {
 
 	protected $table = 'cash';
 	public $timestamps = true;

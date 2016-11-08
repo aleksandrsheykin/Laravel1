@@ -67,9 +67,9 @@
 		
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a class="bg-danger" href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>
-			<li><a href="#expenses" class="bg-success" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
-			<li><a href="#moving" class="bg-info" data-toggle="tab">{{ trans('home.moving') }}</a></li>
+			<li class="active"><a href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>
+			<li><a href="#expenses" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
+			<li><a href="#moving" data-toggle="tab">{{ trans('home.moving') }}</a></li>
 		</ul>
 
 		<!-- Tab panes -->
