@@ -2,13 +2,12 @@
 
 @section('content')
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		$('#date_mainform').change(function() {
 			//alert(123);
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});	
-	});
+	});	
 
 	function SlipRange(newVal) {
 		var d = moment($("#date_mainform").val());
@@ -80,7 +79,7 @@
 					<form role="form">
 						<div class="col-md-4">
 							<div class="form-group">
-
+								//
 							</div>
 						</div>
 						<div class="col-md-3">
