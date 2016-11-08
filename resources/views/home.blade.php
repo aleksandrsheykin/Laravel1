@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<script>
+<script type="text/javascript">
+
 	$(document).ready(function(){
 		$('#date_mainform').change(function() {
-			//alert();
+			//alert(123);
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});	
 	});
@@ -67,14 +68,38 @@
 		
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>
-			<li><a href="#expenses" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
+			<li class="active"><a href="#expenses" data-toggle="tab">{{ trans('home.expenses') }}</a></li>
+			<li><a href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>			
 			<li><a href="#moving" data-toggle="tab">{{ trans('home.moving') }}</a></li>
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<div class="tab-pane active" id="gain">
+			<div class="tab-pane active" id="expenses">	<!-- TAB 1 -->
+				<div class="row" style="padding-top: 10px;">
+					<form role="form">
+						<div class="col-md-4">
+							<div class="form-group">
+
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<input type="text" class="form-control" id="exampleInputEmail1" placeholder="0">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<input type="text" class="form-control" id="exampleInputEmail1" placeholder="0">
+							</div>
+						</div>
+						<div class="col-md-1">
+							//
+						</div>						
+					</form>
+				</div>
+			</div>
+			<div class="tab-pane" id="gain"> <!-- TAB 2 -->
 				<div class="panel panel-danger">
 					<div class="panel-heading">
 						Gain
@@ -84,17 +109,8 @@
 					</div>
 					<div class="panel-footer">Panel footer</div>
 				</div>
-			</div>
-			<div class="tab-pane" id="expenses">
-				<div class="panel panel-success">
-					<div class="panel-heading">Доходы</div>
-					<div class="panel-body">
-						Panel content
-					</div>
-					<div class="panel-footer">Panel footer</div>
-				</div>			
-			</div>
-			<div class="tab-pane" id="moving">
+			</div>			
+			<div class="tab-pane" id="moving"> <!-- TAB 3 -->
 				<div class="panel panel-info">
 					<div class="panel-heading">Движение</div>
 					<div class="panel-body">
@@ -112,6 +128,7 @@
 	</div>
 	
 </div>
+
 @endsection
 
 
