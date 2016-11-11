@@ -3,10 +3,19 @@
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		$('#date_mainform').change(function() {
 			//alert(123);
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});	
+		
+		var mySelect = $('#first-disabled2');
+		$('#special').on('click', function () {
+			alert(111);
+			mySelect.find('option:selected').prop('disabled', true);
+			mySelect.selectpicker('refresh');
+		});
+	
 	});	
 
 	function SlipRange(newVal) {
@@ -79,7 +88,13 @@
 					<form role="form">
 						<div class="col-md-4">
 							<div class="form-group">
-								//
+								<select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
+									<option>Hot Dog, Fries and a Soda</option>
+									<option>Burger, Shake and a Smile</option>
+									<option>Sugar, Spice and all things nice</option>
+									<option>Baby Back Ribs</option>
+									<option>A really really long option made to illustrate an issue with the live search in an inline form</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-md-3">

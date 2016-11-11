@@ -17,6 +17,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/js/moment.min.js"></script>
 	<script src="/js/js.js"></script>
+
+	
+	<!-- Select with search -->
+	<script src="/js/bootstrap-select.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/bootstrap-select.css">
 		
     <script>
         window.Laravel = <?php echo json_encode([
@@ -94,7 +100,5 @@
     @yield('content')
 	</div>
 	
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
 </body>
 </html>
