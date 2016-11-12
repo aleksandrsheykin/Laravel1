@@ -22,7 +22,6 @@ class HomeController extends Controller
 		$d = array_get(Route::current()->parameters(), 'date_mainform');	//если дата есть в запросе, то берем, иначе ставим текущую
 		if ($d == null) {
 			$this->setDateMainform(date("d/m/Y"));
-			//$this->setDateMainform(date());
 		} else {
 			$this->setDateMainform($d);
 		}		
@@ -36,7 +35,6 @@ class HomeController extends Controller
 	
 	public function getDateMainform() 
 	{	
-		//dd($this->date_mainform);
 		return $this->date_mainform;	//Y-m-d
 	}	
     /**
@@ -46,15 +44,18 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+		//dd();
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
-				'date_list_for_uri' => $this->generateDateList($this->getDateMainform()),
+				'date_list_for_uri' => $this->generateDateList(),
 				'selected_menu' => 'home',
+				'cat_expenses' => Auth::User()->getCategories()->where('is_plus', '=', false)->get(),
+				'cat_gain' => Auth::User()->getCategories()->where('is_plus', '=', true)->get()
 				];		
         return view('home', $data);
     }
 	
-	public function generateDateList($d) 
+	public function generateDateList() 
 	{
 		$isCurrentDay = (date('Y-m-d') == $this->getDateMainform()?true:false);
 		return [	//fucking beatch

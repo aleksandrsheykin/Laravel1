@@ -88,13 +88,13 @@
 					<form role="form">
 						<div class="col-md-4">
 							<div class="form-group">
-								<select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
-									<option>Hot Dog, Fries and a Soda</option>
-									<option>Burger, Shake and a Smile</option>
-									<option>Sugar, Spice and all things nice</option>
-									<option>Baby Back Ribs</option>
-									<option>A really really long option made to illustrate an issue with the live search in an inline form</option>
-								</select>
+								@if (isset($cat_expenses))
+									<select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
+									@foreach ($cat_expenses as $cat)
+										<option>{{ $cat->name }}</option>
+									@endforeach
+									</select>
+								@endif
 							</div>
 						</div>
 						<div class="col-md-3">
