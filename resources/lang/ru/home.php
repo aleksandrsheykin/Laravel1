@@ -27,6 +27,7 @@ return [
 	'delete' => 'Удалить',
 	'close' => 'Закрыть',
 	'confirmation delete' => 'Подтверждение удаления',
+	'delete category' => 'Удалить категорию',
 	'visible' => 'Видимая',
 	'Show in the list (you can disable the category that you no longer use)' => 
 		'Показывать в общем списке (можно отключить категории которые Вы перестали использовать)',

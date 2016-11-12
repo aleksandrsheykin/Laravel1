@@ -6,7 +6,7 @@
 		$('.nav-tabs a[href="#'+getCookie('active_tab')+'"]').tab('show');
 		
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-			var active_tab = String(e.target).split('#')[1]; // активная вкладка
+			var active_tab = String(e.target).split('#')[1]; // активнаЯ вкладка
 			setCookie('active_tab', active_tab);
 		});	
 	});
@@ -61,7 +61,7 @@
 						@if (isset($cat_expenses))
 							<table class="table table-hover">
 								@foreach ($cat_expenses as $cat)
-									@if (isset($cat['parent']))	{{-- Есть ли родитель (если нет, то путаница какая-то произошла) --}}
+									@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
@@ -87,7 +87,7 @@
 											</td>
 										</tr>
 									@endif
-									@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
+									@if (isset($cat['childs']))	{{-- если есть дети, то выводим --}}
 										@foreach ($cat['childs'] as $child)
 											<tr>
 												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
@@ -227,7 +227,7 @@
 						@if (isset($cat_gain))
 							<table class="table table-hover">
 								@foreach ($cat_gain as $cat)
-									@if (isset($cat['parent']))	{{-- Есть ли родитель (если нет, то путаница какая-то произошла) --}}
+									@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какаЯ-то произошла) --}}
 										<tr class="active">
 											<td style="width: 30%;">{{ $cat['parent']->name }}</td>
 											<td>{{ $cat['parent']->description }}</td>
@@ -253,7 +253,7 @@
 											</td>
 										</tr>
 									@endif
-									@if (isset($cat['childs']))	{{-- Если есть дети, то выводим --}}
+									@if (isset($cat['childs']))	{{-- если есть дети, то выводим --}}
 										@foreach ($cat['childs'] as $child)
 											<tr>
 												<td style="width: 30%; padding-left: 30px;">{{ $child->name }}</td>
@@ -404,7 +404,7 @@
 				<h4 class="modal-title" id="myModalLabel">{{ trans('home.confirmation delete') }}</h4>
 			</div>
 			<div class="modal-body" id="modal-body">
-				Удалить категорию <label id="delete-category-name">name</label>? 
+				{{ trans('home.delete category') }} <label id="delete-category-name">name</label>? 
 			</div>
 			<div class="modal-footer">
 				<form action="" id="delete-button">
