@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Route;
 use Auth;
+use StaticFunctions;
 
 class HomeController extends Controller
 {
@@ -45,6 +46,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 		//dd();
+		//StaticFunctions::testfunc();
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
 				'date_list_for_uri' => $this->generateDateList(),

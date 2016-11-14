@@ -5,13 +5,11 @@
 	$(document).ready(function(){
 		
 		$('#date_mainform').change(function() {
-			//alert(123);
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});	
 		
 		var mySelect = $('#first-disabled2');
 		$('#special').on('click', function () {
-			alert(111);
 			mySelect.find('option:selected').prop('disabled', true);
 			mySelect.selectpicker('refresh');
 		});
@@ -89,7 +87,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								@if (isset($cat_expenses))
-									<select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
+									<select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="{{ trans('home.where spent?') }}">
 									@foreach ($cat_expenses as $cat)
 										<option>{{ $cat->name }}</option>
 									@endforeach
