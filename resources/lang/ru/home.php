@@ -34,7 +34,8 @@ return [
 	'alter category' => 'Изменить категорию',
 	'save' => 'Сохранить',
 	'cancel' => 'Отмена',
-	'category not found' => "Категории не найдены",
-	'where spent?' => "Куда потратили?"
+	'category not found' => 'Категории не найдены',
+	'where spent?' => 'Куда потратили?',
+	'comment to the day' => 'Комментарий к дню'
 
 ];

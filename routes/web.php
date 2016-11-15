@@ -19,6 +19,7 @@ Auth::routes();
 //HomeController have middleware('auth')
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/{date_mainform}', 'HomeController@index')->where('date_mainform', '(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d');	//пропускаем только даты
+Route::post('/home/', 'HomeController@indexPost')->name('homePost');	
 
 Route::get('/categories', 'CategoriesController@index')->name('categories');
 Route::put('/categories', 'CategoriesController@put')->name('categoriesPut');

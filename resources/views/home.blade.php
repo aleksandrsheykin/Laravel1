@@ -13,6 +13,10 @@
 			mySelect.find('option:selected').prop('disabled', true);
 			mySelect.selectpicker('refresh');
 		});
+		
+		$('#expenses_cat_id, #expenses_summa, #expenses_prim').click(function() {
+			alert(111);
+		});
 	
 	});	
 
@@ -81,13 +85,14 @@
 
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<div class="tab-pane active" id="expenses">	<!-- TAB 1 -->
-				<div class="row" style="padding-top: 10px;">
-					<form role="form">
+			<div class="tab-pane active" style="padding-top: 10px; padding-bottom: 10px;" id="expenses">	<!-- TAB 1 -->
+				<form role="form" method="POST" action="{{ Route('homePost') }}" id="expenses_form" name="expenses_form">
+					<input type="hidden" name="expenses_date_mainform" id="expenses_date_mainform" value="{{ $date_mainform }}">
+					<div class="row" id="expenses_row_1">
 						<div class="col-md-4">
 							<div class="form-group">
+								<select class="selectpicker form-control" data-live-search="true" id="expenses_cat_id" name="expenses_cat_id" title="{{ trans('home.where spent?') }}">
 								@if (isset($cat_expenses))
-									<select class="selectpicker form-control" data-live-search="true" id="cat_expenses_id" name="cat_expenses_id" title="{{ trans('home.where spent?') }}">
 									@foreach ($cat_expenses as $cat)
 										@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}
 											<option value="{{ $cat['parent']->id }}">{{ $cat['parent']->name }}</option>
@@ -98,25 +103,71 @@
 											@endforeach
 										@endif
 									@endforeach
-									</select>
+								@else
+									<option value="0">{{ trans('home.category not found') }}</option>
 								@endif
+								</select>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<input type="text" class="form-control" id="exampleInputEmail1" placeholder="0">
+								<input type="text" class="form-control" id="expenses_summa" name="expenses_summa" placeholder="0">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="exampleInputEmail1" placeholder="0">
+								<input type="text" class="form-control" id="expenses_prim" name="expenses_prim" placeholder="Примечание">
 							</div>
 						</div>
-						<div class="col-md-1">
-							//
-						</div>						
-					</form>
-				</div>
+						<div class="col-md-1 text-center">
+							<button type="button" class="btn btn-default" id="expenses_btn_del" name="expenses_btn_del"><span class="glyphicon glyphicon-remove"></span> </button>
+						</div>
+					</div>
+					
+					<div class="row" id="expenses_row_2">
+						<div class="col-md-4">
+							<div class="form-group">
+								<select class="selectpicker form-control" data-live-search="true" id="expenses_cat_id" name="expenses_cat_id" title="{{ trans('home.where spent?') }}">
+								@if (isset($cat_expenses))
+									@foreach ($cat_expenses as $cat)
+										@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}
+											<option value="{{ $cat['parent']->id }}">{{ $cat['parent']->name }}</option>
+										@endif
+										@if (isset($cat['childs']))	{{-- если есть дети, то выводим --}}
+											@foreach ($cat['childs'] as $child)
+												<option value="{{ $child->id }}">&nbsp;&nbsp;&nbsp;{{ $child->name }}</option>
+											@endforeach
+										@endif
+									@endforeach
+								@else
+									<option value="0">{{ trans('home.category not found') }}</option>
+								@endif
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<input type="text" class="form-control" id="expenses_summa" name="expenses_summa" placeholder="0">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<input type="text" class="form-control" id="expenses_prim" name="expenses_prim" placeholder="Примечание">
+							</div>
+						</div>
+						<div class="col-md-1 text-center">
+							<button type="button" class="btn btn-default" id="expenses_btn_del" name="expenses_btn_del"><span class="glyphicon glyphicon-remove"></span> </button>
+						</div>
+					</div>					
+				
+					<div class="row" id="expenses_row_footer">
+						<div class="col-md-12">
+							<div class="form-group">
+								<textarea class="form-control" rows="2" id="expenses_note" name="expenses_note" placeholder="{{ trans('home.comment to the day') }}">{{ old('categoryDescription') }}</textarea>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
 			<div class="tab-pane" id="gain"> <!-- TAB 2 -->
 				<div class="panel panel-danger">
