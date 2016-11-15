@@ -87,9 +87,16 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								@if (isset($cat_expenses))
-									<select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="{{ trans('home.where spent?') }}">
+									<select class="selectpicker form-control" data-live-search="true" id="cat_expenses_id" name="cat_expenses_id" title="{{ trans('home.where spent?') }}">
 									@foreach ($cat_expenses as $cat)
-										<option>{{ $cat->name }}</option>
+										@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}
+											<option value="{{ $cat['parent']->id }}">{{ $cat['parent']->name }}</option>
+										@endif
+										@if (isset($cat['childs']))	{{-- если есть дети, то выводим --}}
+											@foreach ($cat['childs'] as $child)
+												<option value="{{ $child->id }}">&nbsp;&nbsp;&nbsp;{{ $child->name }}</option>
+											@endforeach
+										@endif
 									@endforeach
 									</select>
 								@endif

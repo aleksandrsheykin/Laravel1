@@ -2,9 +2,7 @@
 
 namespace App\Http;
 
-use Illuminate\Support\ServiceProvider;
-
-class StaticFunctions extends ServiceProvider
+class StaticFunctions
 {
     /**
      * The application's global HTTP middleware stack.
@@ -13,7 +11,17 @@ class StaticFunctions extends ServiceProvider
      *
      * @var array
      */
-    public static function testfunc() {
-		dd(111);
+	public static function createCategoryTree($categories) {
+		if ($categories->count() == 0) return;
+		
+		$r = array();
+		foreach ($categories as $val) {
+			if ($val->parent_id) {
+				$r[$val->parent_id]["childs"][$val->id] = $val;
+			} else {
+				$r[$val->id]["parent"] = $val;
+			}
+		}
+		return $r;
 	}
 }

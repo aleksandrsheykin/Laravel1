@@ -45,14 +45,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-		//dd();
-		//StaticFunctions::testfunc();
+		//dd(StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', true)->get()));
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
 				'date_list_for_uri' => $this->generateDateList(),
 				'selected_menu' => 'home',
-				'cat_expenses' => Auth::User()->getCategories()->where('is_plus', '=', false)->get(),
-				'cat_gain' => Auth::User()->getCategories()->where('is_plus', '=', true)->get()
+				'cat_expenses' => StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', false)->get()),
+				'cat_gain' => StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', true)->get())
 				];		
         return view('home', $data);
     }

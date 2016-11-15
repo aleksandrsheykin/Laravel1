@@ -40,6 +40,6 @@ class Category extends Model {
 	public function getBalances()
 	{
 		return $this->hasMany('Balance');
-	}
+	}	
 
 }

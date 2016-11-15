@@ -7,6 +7,7 @@ use App\Category;
 use Auth;
 use Route;
 use App\User;
+use StaticFunctions;
 
 class CategoriesController extends Controller
 {
@@ -40,8 +41,8 @@ class CategoriesController extends Controller
 		//dd($cat_expenses);
 		$data = [
 				'selected_menu' => 'categories',
-				'cat_expenses' => $this->createCategoryTree($cat_expenses),
-				'cat_gain' => $this->createCategoryTree($cat_gain),
+				'cat_expenses' => StaticFunctions::createCategoryTree($cat_expenses),
+				'cat_gain' => StaticFunctions::createCategoryTree($cat_gain),
 				];		
         return view('categories', $data);
     }
@@ -94,17 +95,4 @@ class CategoriesController extends Controller
 		return redirect()->route('categories');
 	}	
 	
-	public function createCategoryTree($categories) {
-		if ($categories->count() == 0) return;
-		
-		$r = array();
-		foreach ($categories as $val) {
-			if ($val->parent_id) {
-				$r[$val->parent_id]["childs"][$val->id] = $val;
-			} else {
-				$r[$val->id]["parent"] = $val;
-			}
-		}
-		return $r;
-	}
 }
