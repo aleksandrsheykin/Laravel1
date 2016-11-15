@@ -14,11 +14,27 @@
 			mySelect.selectpicker('refresh');
 		});
 		
-		$('#expenses_cat_id, #expenses_summa, #expenses_prim').click(function() {
-			alert(111);
+		$('#expensesSumma, #expensesPrim').click(function(e) {	//добавляем строки в форму
+			var emptyRow = 0;
+			$('[id = expensesSumma]').each(function(i, e) {	//считаем пустые строки (пустой считается та строка, у которой не заполненна сумма)
+				if ($(e).val() == "") {
+					emptyRow++;
+				}
+			});
+			
+			if (emptyRow < 2) {	//добавляем строку, т.к всего одна осталась свободная
+				//alert(111);
+				addRow();
+			}
 		});
 	
-	});	
+	});
+	
+	function addRow() {
+		var row = $('#expensesRow_2').clone();
+		row.attr('id', 'expensesRow_'+3);
+		$('#expensesRowFooter').before(row);
+	}
 
 	function SlipRange(newVal) {
 		var d = moment($("#date_mainform").val());
@@ -88,10 +104,10 @@
 			<div class="tab-pane active" style="padding-top: 10px; padding-bottom: 10px;" id="expenses">	<!-- TAB 1 -->
 				<form role="form" method="POST" action="{{ Route('homePost') }}" id="expenses_form" name="expenses_form">
 					<input type="hidden" name="expenses_date_mainform" id="expenses_date_mainform" value="{{ $date_mainform }}">
-					<div class="row" id="expenses_row_1">
+					<div class="row" id="expensesRow_1">
 						<div class="col-md-4">
 							<div class="form-group">
-								<select class="selectpicker form-control" data-live-search="true" id="expenses_cat_id" name="expenses_cat_id" title="{{ trans('home.where spent?') }}">
+								<select class="selectpicker form-control" data-live-search="true" id="expensesCatId" name="expensesCatId_1" title="{{ trans('home.where spent?') }}">
 								@if (isset($cat_expenses))
 									@foreach ($cat_expenses as $cat)
 										@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}
@@ -111,23 +127,23 @@
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expenses_summa" name="expenses_summa" placeholder="0">
+								<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_1" placeholder="0">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expenses_prim" name="expenses_prim" placeholder="Примечание">
+								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_1" placeholder="Примечание">
 							</div>
 						</div>
 						<div class="col-md-1 text-center">
-							<button type="button" class="btn btn-default" id="expenses_btn_del" name="expenses_btn_del"><span class="glyphicon glyphicon-remove"></span> </button>
+							<button type="button" class="btn btn-default" id="expensesBtnDel" name="expensesBtnDel_1"><span class="glyphicon glyphicon-remove"></span> </button>
 						</div>
 					</div>
 					
-					<div class="row" id="expenses_row_2">
+					<div class="row" id="expensesRow_2">
 						<div class="col-md-4">
 							<div class="form-group">
-								<select class="selectpicker form-control" data-live-search="true" id="expenses_cat_id" name="expenses_cat_id" title="{{ trans('home.where spent?') }}">
+								<select class="selectpicker form-control" data-live-search="true" id="expensesCatId" name="expensesCatId_2" title="{{ trans('home.where spent?') }}">
 								@if (isset($cat_expenses))
 									@foreach ($cat_expenses as $cat)
 										@if (isset($cat['parent']))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}
@@ -147,24 +163,27 @@
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expenses_summa" name="expenses_summa" placeholder="0">
+								<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_2" placeholder="0">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expenses_prim" name="expenses_prim" placeholder="Примечание">
+								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_2" placeholder="Примечание">
 							</div>
 						</div>
 						<div class="col-md-1 text-center">
-							<button type="button" class="btn btn-default" id="expenses_btn_del" name="expenses_btn_del"><span class="glyphicon glyphicon-remove"></span> </button>
+							<button type="button" class="btn btn-default" id="expensesBtnDel" name="expensesBtnDel_2"><span class="glyphicon glyphicon-remove"></span> </button>
 						</div>
 					</div>					
 				
-					<div class="row" id="expenses_row_footer">
-						<div class="col-md-12">
+					<div class="row" id="expensesRowFooter">
+						<div class="col-md-10">
 							<div class="form-group">
-								<textarea class="form-control" rows="2" id="expenses_note" name="expenses_note" placeholder="{{ trans('home.comment to the day') }}">{{ old('categoryDescription') }}</textarea>
+								<textarea class="form-control" rows="2" id="expensesComment" name="expenseComment" placeholder="{{ trans('home.comment to the day') }}">{{ old('categoryDescription') }}</textarea>
 							</div>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-primary">По умолчанию</button>
 						</div>
 					</div>
 				</form>
