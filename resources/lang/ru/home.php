@@ -36,6 +36,7 @@ return [
 	'cancel' => 'Отмена',
 	'category not found' => 'Категории не найдены',
 	'where spent?' => 'Куда потратили?',
-	'comment to the day' => 'Комментарий к дню'
+	'comment to the day' => 'Комментарий к дню',
+	'comment' => 'Примечание'
 
 ];

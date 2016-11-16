@@ -16,6 +16,7 @@
 		
 		$('#expensesSumma, #expensesPrim').click(function(e) {	//добавляем строки в форму
 			var emptyRow = 0;
+			
 			$('[id = expensesSumma]').each(function(i, e) {	//считаем пустые строки (пустой считается та строка, у которой не заполненна сумма)
 				if ($(e).val() == "") {
 					emptyRow++;
@@ -23,19 +24,16 @@
 			});
 			
 			if (emptyRow < 2) {	//добавляем строку, т.к всего одна осталась свободная
-				//alert(111);
 				addRow();
 			}
+		});
+		
+		$('[id = expensesBtnDel]').click(function(e) {
+			alert($(this).attr('name'));
 		});
 	
 	});
 	
-	function addRow() {
-		var row = $('#expensesRow_2').clone();
-		row.attr('id', 'expensesRow_'+3);
-		$('#expensesRowFooter').before(row);
-	}
-
 	function SlipRange(newVal) {
 		var d = moment($("#date_mainform").val());
 		var url = "{{ Route('home') }}" + "/";
@@ -60,6 +58,47 @@
 	
 	function onMouseUpRande() {
 		$('#date_mainform').change();
+	}
+
+	function addRow() {
+		var countRows = $('div[id*=expensesRow_]').length;
+		var numRow = countRows + 1;
+
+		var row = '<div class="row" id="expensesRow_'+numRow+'">	\
+		<input type="hidden" id="expensesOldId" name="expensesOldId_'+numRow+'" value="">	\
+		<div class="col-md-4"><div class="form-group">';
+		
+		row += '<select class="selectpicker form-control" data-live-search="true" id="expensesCatId" name="expensesCatId_'+numRow+'" title="{{ trans("home.where spent?") }}">';
+		@if (isset($cat_expenses))
+			@foreach ($cat_expenses as $cat)	
+				@if (isset($cat["parent"]))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}	
+					row += '<option value="{{ $cat["parent"]->id }}">{{ $cat["parent"]->name }}</option>';
+				@endif	
+				@if (isset($cat["childs"]))	{{-- если есть дети, то выводим --}}	
+					@foreach ($cat["childs"] as $child)	
+						row += '<option value="{{ $child->id }}">&nbsp;&nbsp;&nbsp;{{ $child->name }}</option>';
+					@endforeach	
+				@endif	
+			@endforeach
+		@else
+			row += '<option value="0">{{ trans("home.category not found") }}</option>';
+		@endif		
+		row += '</select>';
+		
+		row += '</div></div>	\
+		<div class="col-md-3"><div class="form-group">	\
+			<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_'+numRow+'" placeholder="0">	\
+		</div></div>	\
+		<div class="col-md-4"><div class="form-group">	\
+			<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_'+numRow+'" placeholder="{{ trans("home.comment") }}">	\
+		</div></div>	\
+		<div class="col-md-1 text-center" style="padding-bottom: 10px;">	\
+			<button type="button" class="btn btn-danger" id="expensesBtnDel" name="expensesBtnDel_'+numRow+'" title="{{ trans("home.delete") }}"><span class="glyphicon glyphicon-remove"></span> </button>	\
+		</div></div>';
+		
+		//var row = $('#expensesRow_2').clone();
+		//row.attr('id', 'expensesRow_'+3);
+		$('#expensesRowFooter').before(row);
 	}
 	
 </script>
@@ -103,10 +142,11 @@
 		<div class="tab-content">
 			<div class="tab-pane active" style="padding-top: 10px; padding-bottom: 10px;" id="expenses">	<!-- TAB 1 -->
 				<form role="form" method="POST" action="{{ Route('homePost') }}" id="expenses_form" name="expenses_form">
-					<input type="hidden" name="expenses_date_mainform" id="expenses_date_mainform" value="{{ $date_mainform }}">
-					<div class="row" id="expensesRow_1">
+					<input type="hidden" name="expensesDateMainform" id="expensesDateMainform" value="{{ $date_mainform }}">
+					<div class="row" id="expensesRow_1" name="expensesRow">
+						<input type="hidden" id="expensesOldId" name="expensesOldId_1" value="">
 						<div class="col-md-4">
-							<div class="form-group">
+							<div class="form-group" id="divWithSelect_1">
 								<select class="selectpicker form-control" data-live-search="true" id="expensesCatId" name="expensesCatId_1" title="{{ trans('home.where spent?') }}">
 								@if (isset($cat_expenses))
 									@foreach ($cat_expenses as $cat)
@@ -135,14 +175,15 @@
 								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_1" placeholder="Примечание">
 							</div>
 						</div>
-						<div class="col-md-1 text-center">
-							<button type="button" class="btn btn-default" id="expensesBtnDel" name="expensesBtnDel_1"><span class="glyphicon glyphicon-remove"></span> </button>
+						<div class="col-md-1 text-center" style="padding-bottom: 10px;">
+							<button type="button" class="btn btn-danger" id="expensesBtnDel" name="expensesBtnDel_1" title="{{ trans('home.delete') }}"><span class="glyphicon glyphicon-remove"></span> </button>
 						</div>
 					</div>
 					
-					<div class="row" id="expensesRow_2">
+					<div class="row" id="expensesRow_2" name="expensesRow">
+						<input type="hidden" id="expensesOldId" name="expensesOldId_2" value="">
 						<div class="col-md-4">
-							<div class="form-group">
+							<div class="form-group" id="divWithSelect_2">
 								<select class="selectpicker form-control" data-live-search="true" id="expensesCatId" name="expensesCatId_2" title="{{ trans('home.where spent?') }}">
 								@if (isset($cat_expenses))
 									@foreach ($cat_expenses as $cat)
@@ -171,19 +212,19 @@
 								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_2" placeholder="Примечание">
 							</div>
 						</div>
-						<div class="col-md-1 text-center">
-							<button type="button" class="btn btn-default" id="expensesBtnDel" name="expensesBtnDel_2"><span class="glyphicon glyphicon-remove"></span> </button>
+						<div class="col-md-1 text-center" style="padding-bottom: 10px;">
+							<button type="button" class="btn btn-danger" id="expensesBtnDel" name="expensesBtnDel_2" title="{{ trans('home.delete') }}"><span class="glyphicon glyphicon-remove"></span> </button>
 						</div>
 					</div>					
 				
 					<div class="row" id="expensesRowFooter">
 						<div class="col-md-10">
 							<div class="form-group">
-								<textarea class="form-control" rows="2" id="expensesComment" name="expenseComment" placeholder="{{ trans('home.comment to the day') }}">{{ old('categoryDescription') }}</textarea>
+								<textarea class="form-control" rows="2" id="expensesComment" name="expensesComment" placeholder="{{ trans('home.comment to the day') }}">{{ old('categoryDescription') }}</textarea>
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-primary">По умолчанию</button>
+							<button style="width: 100%;" type="button" class="btn btn-success" title="{{ trans('home.save') }}"><span class="glyphicon glyphicon-floppy-saved"></span> Записать</button>
 						</div>
 					</div>
 				</form>
