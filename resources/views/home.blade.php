@@ -95,10 +95,10 @@
 		<div class="col-md-1 text-center" style="padding-bottom: 10px;">	\
 			<button type="button" class="btn btn-danger" id="expensesBtnDel" name="expensesBtnDel_'+numRow+'" title="{{ trans("home.delete") }}"><span class="glyphicon glyphicon-remove"></span> </button>	\
 		</div></div>';
-		
-		//var row = $('#expensesRow_2').clone();
-		//row.attr('id', 'expensesRow_'+3);
+
 		$('#expensesRowFooter').before(row);
+		
+		$('.selectpicker').selectpicker('refresh');	// refresh select's (add search in new select)
 	}
 	
 </script>
