@@ -8,15 +8,9 @@
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});	
 		
-		var mySelect = $('#first-disabled2');
-		$('#special').on('click', function () {
-			mySelect.find('option:selected').prop('disabled', true);
-			mySelect.selectpicker('refresh');
-		});
-		
 		$('#expensesSumma, #expensesPrim').click(function(e) {	//добавляем строки в форму
 			var emptyRow = 0;
-			
+			//alert(111);
 			$('[id = expensesSumma]').each(function(i, e) {	//считаем пустые строки (пустой считается та строка, у которой не заполненна сумма)
 				if ($(e).val() == "") {
 					emptyRow++;
@@ -34,7 +28,8 @@
 	
 	});
 	
-	function SlipRange(newVal) {
+	function SlipRange(newVal) 
+	{
 		var d = moment($("#date_mainform").val());
 		var url = "{{ Route('home') }}" + "/";
 		
@@ -44,7 +39,6 @@
 		$("#tomorrow").text(d.set('date', parseInt(newVal)+1).format("DD.MM.YYYY"));
 		$("#dayAfterTomorrow").text(d.set('date', parseInt(newVal)+2).format("DD.MM.YYYY"));
 
-		//$("#myspan").text( url );
 		$("#firstDayUrl").attr("href", url+d.set('date', parseInt(newVal)-3).format("DD/MM/YYYY"));
 		$("#dayBeforeYesterday").attr("href", url+d.set('date', parseInt(newVal)-2).format("DD/MM/YYYY"));
 		$("#yesterday").attr("href", url+d.set('date', parseInt(newVal)-1).format("DD/MM/YYYY"));
@@ -53,14 +47,15 @@
 		$("#lastDayUrl").attr("href", url+d.set('date', parseInt(newVal)+3).format("DD/MM/YYYY"));
 		
 		return false;
-		
 	}
 	
-	function onMouseUpRande() {
+	function onMouseUpRande() 
+	{
 		$('#date_mainform').change();
 	}
 
-	function addRow() {
+	function addRow() 
+	{
 		var countRows = $('div[id*=expensesRow_]').length;
 		var numRow = countRows + 1;
 
