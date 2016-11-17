@@ -21,8 +21,10 @@
 			}
 		});
 		
-		$(document).on('click', '#expensesBtnDel', function(e) {
-			alert($(this).attr('name'));
+		$(document).on('click', '#expensesBtnDel', function(e) {	//delete row
+			var rowNum = parseInt($(this).attr('name').replace('expensesBtnDel_', ''));
+			$('#expensesRow_'+rowNum).remove();
+			SetNumRowsAfterDelete(rowNum);
 		});
 		
 		$(document).on('keyup', '#expensesSumma', function(e) {	//only numeric, ., ,
@@ -87,7 +89,7 @@
 		
 		row += '</div></div>	\
 		<div class="col-md-3"><div class="form-group">	\
-			<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_'+numRow+'" placeholder="0">	\
+			<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_'+numRow+'" placeholder="{{ trans("home.total") }}">	\
 		</div></div>	\
 		<div class="col-md-4"><div class="form-group">	\
 			<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_'+numRow+'" placeholder="{{ trans("home.comment") }}">	\
@@ -101,6 +103,19 @@
 		$('.selectpicker').selectpicker('refresh');	// refresh select's (add search in new select)
 	}
 	
+	function SetNumRowsAfterDelete(rowNum)	//сдвигаем все строки после удаленной (строки должны быть пронумерованны по порядку)
+	{
+		var countRows = $('div[id*=expensesRow_]').length;
+		var i;	
+		for (i = parseInt(rowNum)+1; i <= countRows; i++) {
+			$('#expensesRow_'+i).attr('id', 'expensesRow_'+(i-1));
+			$('[name=expensesOldId_'+i+']').attr('name', 'expensesOldId_'+(i-1));
+			$('[name=expensesCatId_'+i+']').attr('name', 'expensesCatId_'+(i-1));
+			$('[name=expensesSumma_'+i+']').attr('name', 'expensesSumma_'+(i-1));
+			$('[name=expensesPrim_'+i+']').attr('name', 'expensesPrim_'+(i-1));
+			$('[name=expensesBtnDel_'+i+']').attr('name', 'expensesBtnDel_'+(i-1));
+		}
+	}
 </script>
 
 <div class="row">
@@ -143,6 +158,7 @@
 			<div class="tab-pane active" style="padding-top: 10px; padding-bottom: 10px;" id="expenses">	<!-- TAB 1 -->
 				<form role="form" method="POST" action="{{ Route('homePost') }}" id="expenses_form" name="expenses_form">
 					<input type="hidden" name="expensesDateMainform" id="expensesDateMainform" value="{{ $date_mainform }}">
+					
 					<div class="row" id="expensesRow_1" name="expensesRow">
 						<input type="hidden" id="expensesOldId" name="expensesOldId_1" value="">
 						<div class="col-md-4">
@@ -167,17 +183,15 @@
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_1" placeholder="0">
+								<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_1" placeholder="{{ trans('home.total') }}">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_1" placeholder="{{ trans("home.comment") }}">
+								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_1" placeholder="{{ trans('home.comment') }}">
 							</div>
 						</div>
-						<div class="col-md-1 text-center" style="padding-bottom: 10px;">
-							<button type="button" class="btn btn-danger" id="expensesBtnDel" name="expensesBtnDel_1" title="{{ trans('home.delete') }}"><span class="glyphicon glyphicon-remove"></span> </button>
-						</div>
+						<div class="col-md-1 text-center" style="padding-bottom: 10px;"></div>
 					</div>
 					
 					<div class="row" id="expensesRow_2" name="expensesRow">
@@ -204,12 +218,12 @@
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_2" placeholder="0">
+								<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_2" placeholder="{{ trans('home.total') }}">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_2" placeholder="{{ trans("home.comment") }}">
+								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_2" placeholder="{{ trans('home.comment') }}">
 							</div>
 						</div>
 						<div class="col-md-1 text-center" style="padding-bottom: 10px;">
@@ -224,7 +238,7 @@
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button style="width: 100%;" type="button" class="btn btn-success" title="{{ trans('home.save') }}"><span class="glyphicon glyphicon-floppy-saved"></span> Записать</button>
+							<button style="width: 100%;" type="button" class="btn btn-success" title="{{ trans('home.save') }}"><span class="glyphicon glyphicon-floppy-saved"></span> {{ trans('home.save') }}</button>
 						</div>
 					</div>
 				</form>
