@@ -8,9 +8,8 @@
 			window.location.href = "{{ Route('home') }}/"+moment(this.value).format("DD/MM/YYYY");
 		});	
 		
-		$('#expensesSumma, #expensesPrim').click(function(e) {	//добавляем строки в форму
+		$(document).on('click', '#expensesSumma, #expensesPrim', function(e) {	//добавляем строки в форму
 			var emptyRow = 0;
-			//alert(111);
 			$('[id = expensesSumma]').each(function(i, e) {	//считаем пустые строки (пустой считается та строка, у которой не заполненна сумма)
 				if ($(e).val() == "") {
 					emptyRow++;
@@ -22,8 +21,14 @@
 			}
 		});
 		
-		$('[id = expensesBtnDel]').click(function(e) {
+		$(document).on('click', '#expensesBtnDel', function(e) {
 			alert($(this).attr('name'));
+		});
+		
+		$(document).on('keyup', '#expensesSumma', function(e) {	//only numeric, ., ,
+			$(this).val($(this).val().replace(/[^\d,.]*/g, '')
+									.replace(/([,.])[,.]+/g, '$1')
+									.replace(/^[^\d]*(\d+([.,]\d{0,5})?).*$/g, '$1'));
 		});
 	
 	});
@@ -167,7 +172,7 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_1" placeholder="Примечание">
+								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_1" placeholder="{{ trans("home.comment") }}">
 							</div>
 						</div>
 						<div class="col-md-1 text-center" style="padding-bottom: 10px;">
@@ -204,7 +209,7 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_2" placeholder="Примечание">
+								<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_2" placeholder="{{ trans("home.comment") }}">
 							</div>
 						</div>
 						<div class="col-md-1 text-center" style="padding-bottom: 10px;">
