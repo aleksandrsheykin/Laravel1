@@ -99,6 +99,7 @@
 		</div></div>';
 
 		$('#expensesRowFooter').before(row);
+		$('#expensesRowCount').val(numRow);
 		
 		$('.selectpicker').selectpicker('refresh');	// refresh select's (add search in new select)
 	}
@@ -107,7 +108,7 @@
 	{
 		var countRows = $('div[id*=expensesRow_]').length;
 		var i;	
-		for (i = parseInt(rowNum)+1; i <= countRows; i++) {
+		for (i = parseInt(rowNum)+1; i <= countRows+1; i++) {
 			$('#expensesRow_'+i).attr('id', 'expensesRow_'+(i-1));
 			$('[name=expensesOldId_'+i+']').attr('name', 'expensesOldId_'+(i-1));
 			$('[name=expensesCatId_'+i+']').attr('name', 'expensesCatId_'+(i-1));
@@ -115,6 +116,7 @@
 			$('[name=expensesPrim_'+i+']').attr('name', 'expensesPrim_'+(i-1));
 			$('[name=expensesBtnDel_'+i+']').attr('name', 'expensesBtnDel_'+(i-1));
 		}
+		$('#expensesRowCount').val(countRows);
 	}
 </script>
 
@@ -157,7 +159,9 @@
 		<div class="tab-content">
 			<div class="tab-pane active" style="padding-top: 10px; padding-bottom: 10px;" id="expenses">	<!-- TAB 1 -->
 				<form role="form" method="POST" action="{{ Route('homePost') }}" id="expenses_form" name="expenses_form">
+					{{ csrf_field() }}
 					<input type="hidden" name="expensesDateMainform" id="expensesDateMainform" value="{{ $date_mainform }}">
+					<input type="hidden" name="expensesRowCount" id="expensesRowCount" value="2">
 					
 					<div class="row" id="expensesRow_1" name="expensesRow">
 						<input type="hidden" id="expensesOldId" name="expensesOldId_1" value="">
@@ -238,7 +242,7 @@
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button style="width: 100%;" type="button" class="btn btn-success" title="{{ trans('home.save') }}"><span class="glyphicon glyphicon-floppy-saved"></span> {{ trans('home.save') }}</button>
+							<button style="width: 100%;" type="submit" class="btn btn-success" title="{{ trans('home.save') }}" name="submitExpenses" value="submitExpenses"><span class="glyphicon glyphicon-floppy-saved"></span> {{ trans('home.save') }}</button>
 						</div>
 					</div>
 				</form>

@@ -56,6 +56,41 @@ class HomeController extends Controller
         return view('home', $data);
     }
 	
+	public function indexPost(Request $request) {
+		if ($request->exists('submitExpenses')) {
+			$this->submitExpensesOrGain($request, 'expenses');
+		} else {
+			if ($request->exists('submitGain')) {
+				//
+			} else {
+				dd(22); //WAT?
+			}
+		}
+		
+		return redirect()->route('home');	//добавить параметр (дату которую сохранили)
+	}
+	
+	public function submitExpensesOrGain($r, $pref) {
+		$rowCount = 0;
+		if ($r->exists($pref.'RowCount')) {
+			$rowCount = $r->input($pref.'RowCount');
+		}
+		
+		for ($i=1; $i<=$rowCount; $i++) {
+			if (empty($r->input($pref.'OldId_'.$i))) {	//row not exists
+				//
+			} else {	//row already exists
+				
+			}
+			/*echo $r->input($pref.'Summa_'.$i);
+			//echo 'OldId_'.$r->input($pref.'OldId_'.$i);
+			echo $r->exists($pref.'OldId_'.$i);
+			echo $r->input($pref.'CatId_'.$i);
+			echo $r->input($pref.'Prim_'.$i);*/
+		}
+		dd($r);
+	}
+	
 	public function generateDateList() 
 	{
 		$isCurrentDay = (date('Y-m-d') == $this->getDateMainform()?true:false);
