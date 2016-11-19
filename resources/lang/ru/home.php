@@ -40,6 +40,7 @@ return [
 	'comment' => 'Примечание',
 	'total' => 'Сумма',
 	'wow! You spend a lot. You can not make more than' => 'Вау! Ты очень много тратишь. Нельзя делать больше',
+	'wow! You earn a lot. You can not make more than' => 'Вау! Ты очень много зарабатываешь. Нельзя делать больше',
 	'entries per day.' => 'записей в день.',
 	'reached the maximum' => 'Достигнут максимум',
 

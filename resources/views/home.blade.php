@@ -74,44 +74,73 @@
 		var numRow = countRows + 1;
 
 		var row = '<div class="row" id="'+prefix+'Row_'+numRow+'">	\
-		<input type="hidden" id="expensesOldId" name="expensesOldId_'+numRow+'" value="">	\
+		<input type="hidden" id="'+prefix+'OldId" name="'+prefix+'OldId_'+numRow+'" value="">	\
 		<div class="col-md-4"><div class="form-group">';
-		
-		row += '<select class="selectpicker form-control" data-live-search="true" id="expensesCatId" name="expensesCatId_'+numRow+'" title="{{ trans("home.where spent?") }}">';
+
+		//create a select with options on expenses or gain
+		row += '<select class="selectpicker form-control" data-live-search="true" id="'+prefix+'CatId" name="'+prefix+'CatId_'+numRow+'" title="{{ trans("home.where spent?") }}">';
+		var optionsExpenses = '';
 		@if (isset($cat_expenses))
 			@foreach ($cat_expenses as $cat)	
 				@if (isset($cat["parent"]))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}	
-					row += '<option value="{{ $cat["parent"]->id }}">{{ $cat["parent"]->name }}</option>';
+					optionsExpenses += '<option value="{{ $cat["parent"]->id }}">{{ $cat["parent"]->name }}</option>';
 				@endif	
 				@if (isset($cat["childs"]))	{{-- если есть дети, то выводим --}}	
 					@foreach ($cat["childs"] as $child)	
-						row += '<option value="{{ $child->id }}">&nbsp;&nbsp;&nbsp;{{ $child->name }}</option>';
+						optionsExpenses += '<option value="{{ $child->id }}">&nbsp;&nbsp;&nbsp;{{ $child->name }}</option>';
 					@endforeach	
 				@endif	
 			@endforeach
 		@else
-			row += '<option value="0">{{ trans("home.category not found") }}</option>';
-		@endif		
+			optionsExpenses += '<option value="0">{{ trans("home.category not found") }}</option>';
+		@endif
+
+		var optionsGain = '';
+		@if (isset($cat_gain))
+			@foreach ($cat_gain as $cat)	
+				@if (isset($cat["parent"]))	{{-- есть ли родитель (если нет, то путаница какая-то произошла) --}}	
+					optionsGain += '<option value="{{ $cat["parent"]->id }}">{{ $cat["parent"]->name }}</option>';
+				@endif	
+				@if (isset($cat["childs"]))	{{-- если есть дети, то выводим --}}	
+					@foreach ($cat["childs"] as $child)	
+						optionsGain += '<option value="{{ $child->id }}">&nbsp;&nbsp;&nbsp;{{ $child->name }}</option>';
+					@endforeach	
+				@endif	
+			@endforeach
+		@else
+			optionsGain += '<option value="0">{{ trans("home.category not found") }}</option>';
+		@endif
+		
+		if (prefix = 'expenses') {
+			row += optionsExpenses;
+		} else if (prefix = 'gain') {
+			row += optionsGain;
+		}
+		
 		row += '</select>';
 		
 		row += '</div></div>	\
 		<div class="col-md-3"><div class="form-group">	\
-			<input type="text" class="form-control" id="expensesSumma" name="expensesSumma_'+numRow+'" placeholder="{{ trans("home.total") }}">	\
+			<input type="text" class="form-control" id="'+prefix+'Summa" name="'+prefix+'Summa_'+numRow+'" placeholder="{{ trans("home.total") }}">	\
 		</div></div>	\
 		<div class="col-md-4"><div class="form-group">	\
-			<input type="text" class="form-control" id="expensesPrim" name="expensesPrim_'+numRow+'" placeholder="{{ trans("home.comment") }}">	\
+			<input type="text" class="form-control" id="'+prefix+'Prim" name="'+prefix+'Prim_'+numRow+'" placeholder="{{ trans("home.comment") }}">	\
 		</div></div>	\
 		<div class="col-md-1 text-center" style="padding-bottom: 10px;">	\
-			<button type="button" class="btn btn-danger" id="expensesBtnDel" name="expensesBtnDel_'+numRow+'" title="{{ trans("home.delete") }}"><span class="glyphicon glyphicon-remove"></span> </button>	\
+			<button type="button" class="btn btn-danger" id="'+prefix+'BtnDel" name="'+prefix+'BtnDel_'+numRow+'" title="{{ trans("home.delete") }}"><span class="glyphicon glyphicon-remove"></span> </button>	\
 		</div></div>';
 
-		$('#expensesRowFooter').before(row);
-		$('#expensesRowCount').val(numRow);
+		$('#'+prefix+'RowFooter').before(row);
+		$('#'+prefix+'RowCount').val(numRow);
 		
 		$('.selectpicker').selectpicker('refresh');	// refresh select's (add search in new select)
 		
 		if (countRows >= maxRows-1) {
-			ShowErrorModal('{{ trans("home.reached the maximum") }}', '{{ trans("home.wow! You spend a lot. You can not make more than") }} '+maxRows+' {{ trans("home.entries per day.") }}');
+			if (prefix = 'expenses') {
+				ShowErrorModal('{{ trans("home.reached the maximum") }}', '{{ trans("home.wow! You spend a lot. You can not make more than") }} '+maxRows+' {{ trans("home.entries per day.") }}');
+			} else if (prefix = 'gain') {
+				ShowErrorModal('{{ trans("home.reached the maximum") }}', '{{ trans("home.wow! You earn a lot. You can not make more than") }} '+maxRows+' {{ trans("home.entries per day.") }}');
+			}
 			return false;
 		}
 	}
