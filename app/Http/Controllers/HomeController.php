@@ -45,7 +45,6 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-		//dd(StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', true)->get()));
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
 				'date_list_for_uri' => $this->generateDateList(),
@@ -80,7 +79,7 @@ class HomeController extends Controller
 			if (empty($r->input($pref.'OldId_'.$i))) {	//row not exists
 				//
 			} else {	//row already exists
-				
+				//
 			}
 			/*echo $r->input($pref.'Summa_'.$i);
 			//echo 'OldId_'.$r->input($pref.'OldId_'.$i);

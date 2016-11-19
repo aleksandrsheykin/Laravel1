@@ -38,6 +38,9 @@ return [
 	'where spent?' => 'Куда потратили?',
 	'comment to the day' => 'Комментарий к дню',
 	'comment' => 'Примечание',
-	'total' => 'Сумма'
+	'total' => 'Сумма',
+	'wow! You spend a lot. You can not make more than' => 'Вау! Ты очень много тратишь. Нельзя делать больше',
+	'entries per day.' => 'записей в день.',
+	'reached the maximum' => 'Достигнут максимум',
 
 ];

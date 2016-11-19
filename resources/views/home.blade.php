@@ -17,7 +17,7 @@
 			});
 			
 			if (emptyRow < 2) {	//добавляем строку, т.к всего одна осталась свободная
-				addRow();
+				addRow('expenses');
 			}
 		});
 		
@@ -61,12 +61,19 @@
 		$('#date_mainform').change();
 	}
 
-	function addRow() 
+	function addRow(prefix) 
 	{
+		if (prefix == '') { prefix = 'expenses'; }
+		
+		var maxRows = 50;
 		var countRows = $('div[id*=expensesRow_]').length;
+		if (countRows >= maxRows) {
+			return false;
+		}
+		
 		var numRow = countRows + 1;
 
-		var row = '<div class="row" id="expensesRow_'+numRow+'">	\
+		var row = '<div class="row" id="'+prefix+'Row_'+numRow+'">	\
 		<input type="hidden" id="expensesOldId" name="expensesOldId_'+numRow+'" value="">	\
 		<div class="col-md-4"><div class="form-group">';
 		
@@ -102,6 +109,11 @@
 		$('#expensesRowCount').val(numRow);
 		
 		$('.selectpicker').selectpicker('refresh');	// refresh select's (add search in new select)
+		
+		if (countRows >= maxRows-1) {
+			ShowErrorModal('{{ trans("home.reached the maximum") }}', '{{ trans("home.wow! You spend a lot. You can not make more than") }} '+maxRows+' {{ trans("home.entries per day.") }}');
+			return false;
+		}
 	}
 	
 	function SetNumRowsAfterDelete(rowNum)	//сдвигаем все строки после удаленной (строки должны быть пронумерованны по порядку)
