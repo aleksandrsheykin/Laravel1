@@ -52,7 +52,12 @@ class Cash extends Model {
 		} else {
 			$type = 2;
 		}
-		return Cash::where('user_id', '=', Auth::User()->id)->where('is_basic', '=', $type)->get(array('id'));
+		$cashId = Cash::where('user_id', '=', Auth::User()->id)->where('is_basic', '=', $type)->get(array('id'));
+		if ($cashId->count()) {
+			return $cashId[0]->id;
+		} else {
+			return false;
+		}
 	}
 
 }

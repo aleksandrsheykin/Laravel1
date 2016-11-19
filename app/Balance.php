@@ -10,7 +10,7 @@ class Balance extends Model {
 
 	public function getCash()
 	{
-		return $this->hasOne('User');
+		return $this->hasOne('Cash');
 	}
 
 	public function getCategory()

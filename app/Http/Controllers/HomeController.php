@@ -47,7 +47,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-		dd(Cash::getBasicCashId('expenses'));
+		//dd(intval());
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
 				'date_list_for_uri' => $this->generateDateList(),
@@ -71,7 +71,7 @@ class HomeController extends Controller
 		return redirect()->route('home');	//добавить параметр (дату которую сохранили)
 	}
 	
-	public function submitExpensesOrGain($r, $pref) {
+	public function submitExpensesOrGain($r, $pref) {	//$pref = expenses or gain
 		$rowCount = 0;
 		if ($r->exists($pref.'RowCount')) {
 			$rowCount = $r->input($pref.'RowCount');
@@ -90,10 +90,17 @@ class HomeController extends Controller
 			if ($catId <= 0) { continue; }
 			$oldId = StaticFunctions::validateInt($r->input($pref.'OldId_'.$i));
 			
-			if ($oldId) {	//row not exists
-				//$b = new Balance();
-			} else {	//row already exists
+			if ($oldId) {	//row already exists
 				//
+			} else {	//row not exists
+				$b = new Balance();
+				$b->cash_id = Cash::getBasicCashId($pref);
+				$b->summa = $summa;
+				$b->description = $prim;
+				$b->category_id = $catId;
+				//$b->datebal = 
+				$b->user_id = Auth::User()->id;
+				$b->save();
 			}
 			/*echo $r->input($pref.'Summa_'.$i);
 			//echo 'OldId_'.$r->input($pref.'OldId_'.$i);
