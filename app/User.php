@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Category;
+use App\Cash;
 
 class User extends Authenticatable
 {
@@ -30,6 +31,21 @@ class User extends Authenticatable
 			$c->user_id = $user->id;
 			$c->save();
 		}
+		
+		$sysCashPlus = new Cash();	//create system cashes
+		$sysCashPlus->user_id = $user->id;
+		$sysCashPlus->is_basic = 1;
+		$sysCashPlus->summa = 0;
+		$sysCashPlus->name = trans('home.basic cash with the expenses');
+		$sysCashPlus->description = trans('home.here, all your expenses');
+		$sysCashPlus->save();
+		$sysCashMinus = new Cash();
+		$sysCashMinus->user_id = $user->id;
+		$sysCashMinus->is_basic = 2;
+		$sysCashMinus->summa = 0;
+		$sysCashMinus->name = trans('home.basic cash with the proceeds');
+		$sysCashMinus->description = trans('home.here, all your income');
+		$sysCashMinus->save();
 		return $user;
 	}	
 	

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Route;
 use Auth;
 use StaticFunctions;
+use App\Balance;
+use App\Cash;
 
 class HomeController extends Controller
 {
@@ -45,6 +47,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+		dd(Cash::getBasicCashId('expenses'));
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
 				'date_list_for_uri' => $this->generateDateList(),
@@ -56,14 +59,13 @@ class HomeController extends Controller
     }
 	
 	public function indexPost(Request $request) {
+
 		if ($request->exists('submitExpenses')) {
 			$this->submitExpensesOrGain($request, 'expenses');
+		} else if ($request->exists('submitGain')) {
+			$this->submitExpensesOrGain($request, 'gain');
 		} else {
-			if ($request->exists('submitGain')) {
-				//
-			} else {
-				dd(22); //WAT?
-			}
+			dd(22); //WAT?
 		}
 		
 		return redirect()->route('home');	//добавить параметр (дату которую сохранили)
@@ -76,8 +78,20 @@ class HomeController extends Controller
 		}
 		
 		for ($i=1; $i<=$rowCount; $i++) {
-			if (empty($r->input($pref.'OldId_'.$i))) {	//row not exists
-				//
+			$summa = intval($r->input($pref.'Summa_'.$i));
+			if ($summa) {
+				if ($summa == 0) { continue; }
+				if ($summa < 0) { $summa = -$summa; }
+			} else {
+				return false;
+			}
+			$prim = StaticFunctions::validateText($r->input($pref.'Prim_'.$i));
+			$catId = StaticFunctions::validateInt($r->input($pref.'CatId_'.$i));
+			if ($catId <= 0) { continue; }
+			$oldId = StaticFunctions::validateInt($r->input($pref.'OldId_'.$i));
+			
+			if ($oldId) {	//row not exists
+				//$b = new Balance();
 			} else {	//row already exists
 				//
 			}

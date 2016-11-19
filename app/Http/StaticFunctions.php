@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use Validator;
+
 class StaticFunctions
 {
     /**
@@ -21,5 +23,22 @@ class StaticFunctions
 			}
 		}
 		return $r;
+	}
+	
+	public static function validateText($input_text) {
+		$validator = Validator::make(
+			array('input_text' => $input_text),
+			array('input_text' => 'required')
+		);
+		return $validator->passes();
+	}
+	
+	public static function validateInt($num) {
+		$num = intval($num);
+		if ($num) {
+			return $num;
+		} else {
+			return false;
+		}
 	}
 }

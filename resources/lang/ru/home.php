@@ -43,5 +43,9 @@ return [
 	'wow! You earn a lot. You can not make more than' => 'Вау! Ты очень много зарабатываешь. Нельзя делать больше',
 	'entries per day.' => 'записей в день.',
 	'reached the maximum' => 'Достигнут максимум',
+	'basic cash with the expenses' => 'Базовый счет с расходами',
+	'basic cash with the proceeds' => 'Базовый счет с доходами',
+	'here, all your income' => 'Здесь все ваши доходы',
+	'here, all your expenses' => 'Здесь все ваши расходы.',
 
 ];
