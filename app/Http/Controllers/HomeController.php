@@ -9,7 +9,7 @@ use StaticFunctions;
 use App\Balance;
 use App\Cash;
 
-use Redirect;
+//use Redirect;
 
 class HomeController extends Controller
 {
@@ -91,10 +91,11 @@ class HomeController extends Controller
 				if ($summa == 0) { continue; }
 				if ($summa < 0) { $summa = -$summa; }
 			} else {
+				dd('#HC0001');
 				//return redirect()->action('ErrorController@index', ['errorCode' => 'HC0001']);
 				//return Redirect::route('errorCode', array('errorCode' => 'HC0001'));
 				//dd(redirect()->route('errorCode', ['errorCode' => 'HC0001']));
-				return redirect()->route('errorCode');
+				//redirect()->route('errorCode');
 			}
 			$prim = StaticFunctions::validateText($r->input($pref.'Prim_'.$i));
 			$catId = StaticFunctions::validateInt($r->input($pref.'CatId_'.$i));

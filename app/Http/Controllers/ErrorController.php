@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Gate;
 
 class ErrorController extends Controller
 {
-    public function index($errorCode)
+    public function __construct()
     {
-		dd(111);
-		return view('errors.code', $errorCode);
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+		$data = [
+				'selected_menu' => 'question',
+				];		
+        return view('question', $data);
     }
 }

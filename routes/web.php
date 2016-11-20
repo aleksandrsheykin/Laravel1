@@ -30,7 +30,7 @@ Route::get('/accounts', 'AccountsController@index')->name('accounts');
 Route::get('/cheaper', 'CheaperController@index')->name('cheaper');
 Route::get('/question', 'QuestionController@index')->name('question');
 
-Route::get('/error', 'ErrorController@index')->name('errorCode');
+//Route::get('/error', 'ErrorController@index')->name('errorCode');
 /*Route::get('/error/{errorCode}', function($errorCode) {
 	$errorCode = ['errorCode' => $errorCode];
 	return view('errors.code', $errorCode);
