@@ -24,10 +24,12 @@ class HomeController extends Controller
 		
 		$d = array_get(Route::current()->parameters(), 'date_mainform');	//если дата есть в запросе, то берем, иначе ставим текущую
 		if ($d == null) {
-			$this->setDateMainform(date("d/m/Y"));
-		} else {
-			$this->setDateMainform($d);
-		}		
+			$d = $request->input('expensesDateMainform');
+			if ($d == null) {
+				$d = date("d/m/Y");
+			}
+		}
+		$this->setDateMainform($d);		
     }
 
 	public function setDateMainform($d) //привести к нужному для выборки виду
@@ -83,7 +85,7 @@ class HomeController extends Controller
 				if ($summa == 0) { continue; }
 				if ($summa < 0) { $summa = -$summa; }
 			} else {
-				return false;
+				return dd(222);
 			}
 			$prim = StaticFunctions::validateText($r->input($pref.'Prim_'.$i));
 			$catId = StaticFunctions::validateInt($r->input($pref.'CatId_'.$i));
@@ -98,7 +100,7 @@ class HomeController extends Controller
 				$b->summa = $summa;
 				$b->description = $prim;
 				$b->category_id = $catId;
-				//$b->datebal = 
+				$b->datebal = $this->GetDateMainform();
 				$b->user_id = Auth::User()->id;
 				$b->save();
 			}
@@ -108,7 +110,6 @@ class HomeController extends Controller
 			echo $r->input($pref.'CatId_'.$i);
 			echo $r->input($pref.'Prim_'.$i);*/
 		}
-		dd($r);
 	}
 	
 	public function generateDateList() 

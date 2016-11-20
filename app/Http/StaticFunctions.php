@@ -30,7 +30,7 @@ class StaticFunctions
 			array('input_text' => $input_text),
 			array('input_text' => 'required')
 		);
-		return $validator->passes();
+		return ($validator->passes())?$input_text:false;
 	}
 	
 	public static function validateInt($num) {
