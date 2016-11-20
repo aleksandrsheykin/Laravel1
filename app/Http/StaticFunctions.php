@@ -41,4 +41,13 @@ class StaticFunctions
 			return false;
 		}
 	}
+	
+	public static function validateFloat($num) {
+		/*$regex = "/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/";
+
+		$validator = Validator::make(compact('input'),
+			[
+				'input' => array('required','regex:'.$regex)
+			]);*/
+	}
 }

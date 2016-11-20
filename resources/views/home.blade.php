@@ -195,6 +195,12 @@
 			<li><a href="#gain" data-toggle="tab">{{ trans('home.gain') }}</a></li>			
 			<li><a href="#moving" data-toggle="tab">{{ trans('home.moving') }}</a></li>
 		</ul>
+		
+@if (isset($data_expenses))
+	@foreach ($data_expenses as $d_e)
+		{{ $d_e['summa'] }}
+	@endforeach
+@endif
 
 		<!-- Tab panes -->
 		<div class="tab-content">

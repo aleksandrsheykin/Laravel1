@@ -9,6 +9,8 @@ use StaticFunctions;
 use App\Balance;
 use App\Cash;
 
+use Redirect;
+
 class HomeController extends Controller
 {
     /**
@@ -50,12 +52,16 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 		//dd(intval());
+		$data_expenses = Balance::Where('user_id', '=', Auth::User()->id)->
+								where('datebal', '=', $this->getDateMainform())->
+								get(array('id', 'category_id', 'summa', 'description'));
 		$data = [
                 'date_mainform' => $this->getDateMainform(),
 				'date_list_for_uri' => $this->generateDateList(),
 				'selected_menu' => 'home',
 				'cat_expenses' => StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', false)->get()),
-				'cat_gain' => StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', true)->get())
+				'cat_gain' => StaticFunctions::createCategoryTree(Auth::User()->getCategories()->where('is_plus', '=', true)->get()),
+				'data_expenses' => $data_expenses
 				];		
         return view('home', $data);
     }
@@ -80,12 +86,15 @@ class HomeController extends Controller
 		}
 		
 		for ($i=1; $i<=$rowCount; $i++) {
-			$summa = intval($r->input($pref.'Summa_'.$i));
+			$summa = is_numeric($r->input($pref.'Summa_'.$i));
 			if ($summa) {
 				if ($summa == 0) { continue; }
 				if ($summa < 0) { $summa = -$summa; }
 			} else {
-				return dd(222);
+				//return redirect()->action('ErrorController@index', ['errorCode' => 'HC0001']);
+				//return Redirect::route('errorCode', array('errorCode' => 'HC0001'));
+				//dd(redirect()->route('errorCode', ['errorCode' => 'HC0001']));
+				return redirect()->route('errorCode');
 			}
 			$prim = StaticFunctions::validateText($r->input($pref.'Prim_'.$i));
 			$catId = StaticFunctions::validateInt($r->input($pref.'CatId_'.$i));
